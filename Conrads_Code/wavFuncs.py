@@ -7,7 +7,7 @@ import numpy as np
 import time as ti
 
 
-def liverec(myarray, time=3, Fs=44100, freq=150):
+def liverec(myarray, time=3, Fs=8000, freq=150):
     while True:
         myrecording = sd.rec(int(time*Fs),Fs,2)
         sd.wait()
@@ -18,7 +18,7 @@ def liverec(myarray, time=3, Fs=44100, freq=150):
     return myrecording, freqtemp
 
 
-def maxfft(sound, time=3, Fs=44100):
+def maxfft(sound, time=3, Fs=8000):
     xf, yf = noplotfft(sound, time, Fs)
     N = int(time * Fs)
     ind = np.where(yf[:N // 2] == np.max(yf[:N // 2]))
@@ -26,7 +26,7 @@ def maxfft(sound, time=3, Fs=44100):
 
 
 # records a clip using the default microphone of the device
-def recording(time=3, Fs=44100):
+def recording(time=3, Fs=8000):
     print('Now Recording')
     myrecording = sd.rec(int(time * Fs), Fs, 2)
     sd.wait()
@@ -41,7 +41,7 @@ def freqADSR(freq,  # Frequency of the wave
              time=3,  # Sound duration
              ADSR1=(35, 10, 25, 30),  # Tuple of Percentages length for each section
              ADSR2=(0, 0.9, 0.7, 0.7, 0),  # Tuple of Intensity values before and after each section
-             Fs=44100):  # sampling Frequency
+             Fs=8000):  # sampling Frequency
     N = time * Fs
     T = 1 / Fs
     x = np.linspace(0.0, N * T, N, endpoint=False)
@@ -59,7 +59,7 @@ def freqADSR(freq,  # Frequency of the wave
     plt.show()
 
 
-def noplotfft(sound, time=3, Fs=44100):
+def noplotfft(sound, time=3, Fs=8000):
     if type(sound) == str:
         Fs, y = read(sound)
         try:
@@ -87,7 +87,7 @@ def noplotfft(sound, time=3, Fs=44100):
     return xf, yf
 
 
-def plotfft(sound, time=3, Fs=44100):
+def plotfft(sound, time=3, Fs=8000):
     if type(sound) == str:
         Fs, y = read(sound)
         try:

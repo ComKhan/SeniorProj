@@ -14,7 +14,7 @@ def main():
     myrec = wavFuncs.recording(ti)
     freq = wavFuncs.maxfft(myrec, ti)
     while True:
-        myrec, freq = wavFuncs.liverec(myrec, ti, 44100, freq)
+        myrec, freq = wavFuncs.liverec(myrec, ti, 8000, freq)
         outport.send(msg)
 
 
