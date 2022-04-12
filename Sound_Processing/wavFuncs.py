@@ -42,6 +42,7 @@ def recording(time=3, Fs=48000):
     sd.wait()
     print('done recording')
     write('recording.wav', Fs, myrecording)
+    sd.play(myrecording,Fs)
     return myrecording[:, 0]
 
 
@@ -185,7 +186,7 @@ def plotfft(sound, time=3, Fs=48000):
 
 
 # plotfft('recording.wav')
-tim = .05
+tim = .1
 freq1 = maxfft(recording(tim), tim)
 freq2 = maxffthps('FFT.wav', tim)
 print('fft:',freq1,'\nhps:', freq2)
