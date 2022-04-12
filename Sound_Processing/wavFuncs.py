@@ -1,4 +1,7 @@
 from math import pi
+
+import matplotlib.pyplot
+import numpy
 import sounddevice as sd
 import matplotlib.pyplot as plt
 from scipy.io.wavfile import read, write
@@ -24,6 +27,11 @@ def maxfft(sound, time=3, Fs=8000):
     ind = np.where(yf[:N // 2] == np.max(yf[:N // 2]))
     return int(xf[ind[0]])
 
+def maxffthps(sound, time=3, Fs=8000):
+    xf, yf = hps(sound, time, Fs)
+    N = int(time * Fs)
+    ind = np.where(yf[:N // 2] == np.max(yf[:N // 2]))
+    return int(xf[ind[0]])
 
 # records a clip using the default microphone of the device
 def recording(time=3, Fs=8000):
@@ -68,11 +76,14 @@ def noplotfft(sound, time=3, Fs=8000):
         except:
             pass
         N = len(y)
+
     elif type(sound) == int:
         N = time * Fs
+
     else:
         N = time * Fs
         y = sound
+
     T = 1 / Fs
     N=int(N)
     x = np.linspace(0.0, N * T, N, endpoint=False)
@@ -85,6 +96,49 @@ def noplotfft(sound, time=3, Fs=8000):
     xf = fftfreq(N, T)[:N // 2]
     write('FFT.wav', Fs, y)
     return xf, yf
+
+
+def hps(sound, time=0.02, Fs=8000):
+    if type(sound) == str:
+        Fs, y = read(sound)
+        try:
+            if len(y[0]) > 1:
+                y = y[:, 0]
+        except:
+            pass
+        N = len(y)
+
+    elif type(sound) == int:
+        N = time * Fs
+
+    else:
+        N = time * Fs
+        y = sound
+
+    T = 1 / Fs
+    N = int(N)
+    x = np.linspace(0.0, N * T, N, endpoint=False)
+
+    if type(sound) == int:
+        freq = sound
+        y = np.int16(2000 * np.sin(2 * pi * freq * x))
+    #fig, axs = plt.subplots(4, constrained_layout=True)
+    yf1 = np.abs(fft(y)[:N // 2])
+    xf = fftfreq(N, T)[:N // 10]
+    #axs[0].plot(xf, yf1[:N // 10])
+    yf2 = np.abs(yf1[0:yf1.size:2])
+#    yf2[N // 2] = 0
+#    yf2[N // 4:] = 0
+    #axs[1].plot(xf, yf2[:N // 10])
+    yf3 = np.abs(yf1[0:yf1.size:3])
+#    yf3[N // 2] = 0
+#    yf3[N // 6:] = 0
+    #axs[2].plot(xf, yf3[:N // 10])
+    yff = numpy.multiply(yf1[:N // 10], yf2[:N // 10])
+    yff = numpy.multiply(yff[:N // 10], yf3[:N // 10])
+    #matplotlib.pyplot.show()
+    write('hps.wav', Fs, y)
+    return xf, yff
 
 
 def plotfft(sound, time=3, Fs=8000):
@@ -126,8 +180,9 @@ def plotfft(sound, time=3, Fs=8000):
 
 
 # plotfft('recording.wav')
-freq = maxfft(recording(3))
-print(freq)
+freq1 = maxfft(recording(1), 1)
+freq2 = maxffthps('FFT.wav', 1)
+print('fft:',freq1,'\nhps', freq2)
 # noplotfft('recording.wav')\
 # freqADSR(freq)
 # Fs, y = read('recording.wav')
