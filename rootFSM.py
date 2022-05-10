@@ -43,6 +43,7 @@ class RecordS(State):
         print("go RecordS")
         pass
 
+
 class StoreS(State):
     def __init__(self):
         # update variable corresponding to the button
@@ -52,6 +53,7 @@ class StoreS(State):
     def Go(self):
         print("go StoreS")
         pass
+
 
 class PlayS(State):
     def __init__(self):
@@ -63,6 +65,7 @@ class PlayS(State):
         print("go PlayS")
         pass
 
+
 class QuickVolS(State):
     def __init__(self):
         # update variable corresponding to the button
@@ -72,6 +75,7 @@ class QuickVolS(State):
     def Go(self):
         print("go QuickVolS")
         pass
+
 
 class SetVolS(State):
     def __init__(self):
@@ -83,6 +87,7 @@ class SetVolS(State):
         print("go SetVolS")
         pass
 
+
 class SetInstS(State):
     def __init__(self):
         # update variable corresponding to the button
@@ -93,6 +98,7 @@ class SetInstS(State):
         print("go SetInstS")
         pass
 
+
 class SetFilterS(State):
     def __init__(self):
         # update variable corresponding to the button
@@ -102,6 +108,7 @@ class SetFilterS(State):
     def Go(self):
         print("go SetFilterS")
         pass
+
 
 class SetOutS(State):
     def __init__(self):
@@ -114,9 +121,8 @@ class SetOutS(State):
         pass
 
 
-
-
 ##============================================================================
+
 
 class Transition():
     def __init__(self, toState):
@@ -132,6 +138,7 @@ class Transition():
         print("trans go")
 
 ##============================================================================
+
 
 class SimpleFSM(object):
     def __init__(self, char):
