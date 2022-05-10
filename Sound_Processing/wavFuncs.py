@@ -186,10 +186,10 @@ def plotfft(sound, time=3, Fs=48000):
 
 
 # plotfft('recording.wav')
-tim = .05
-freq1 = maxfft(recording(tim), tim)
-freq2 = maxffthps('FFT.wav', tim)
-print('fft:',freq1,'\nhps:', freq2)
+#tim = .05
+#freq1 = maxfft(recording(tim), tim)
+#freq2 = maxffthps('FFT.wav', tim)
+#print('fft:',freq1,'\nhps:', freq2)
 # noplotfft('recording.wav')\
 # freqADSR(freq)
 # Fs, y = read('recording.wav')
