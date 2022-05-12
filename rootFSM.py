@@ -5,11 +5,20 @@ from types import prepare_class
 from random import randint
 import time
 import btns
-
+# imports for buttons.py
+import RPi.GPIO as GPIO
+from gpiozero import Button
+import main
 #import lcd
 
 State = type("States", (object,), {})
-
+btn1 = Button(16)
+btn2 = Button(6)
+btn3 = Button(5)
+btn4 = Button(0)
+btn5 = Button(4)
+btn6 = Button(3)
+btn7 = Button(2)
 
 class InitS(State):
     def __init__(self):
@@ -18,8 +27,17 @@ class InitS(State):
         pass
 
     def Go(self):
-        btns.initialize()
-        print("go InitS")
+        #btns.initialize()
+        #print("go InitS")
+        btn1.when_pressed = btns.clickA.clicked
+        '''if btn1.is_pressed: # wait  for button clicks within states
+            btns.clickA.clicked()
+            print("state A clicked button")'''
+        '''if btns.clickA.implement == False: # check for button click updates in main, bc transitions should be triggered there
+            print("state A clicked button")
+            mainFSM.FSM.Transition("toWaitS")
+            btns.clickA.implement = True'''
+        pass
     
 
 class WaitS(State):
@@ -29,7 +47,20 @@ class WaitS(State):
         pass
 
     def Go(self):
-        print("go WaitS")
+        #print("go WaitS")
+        btn2.when_pressed = btns.clickB.clicked
+        '''btns.btn2.when_pressed = btns.clickB.clicked()
+        btns.btn3.when_pressed = btns.clickC.clicked()
+        btns.btn4.when_pressed = btns.clickD.clicked()
+        btns.btn5.when_pressed = btns.clickE.clicked()
+        btns.btn6.when_pressed = btns.clickF.clicked()
+        btns.btn7.when_pressed = btns.clickG.clicked()'''
+
+        # Testing code: Remove for full implementation
+        #mainFSM.FSM.Transition("toInitS")
+        #mainFSM.FSM.curStateName = "InitS"
+        print("State 2")
+        time.sleep(5)
         pass
 
 
@@ -43,7 +74,6 @@ class RecordS(State):
         print("go RecordS")
         pass
 
-
 class StoreS(State):
     def __init__(self):
         # update variable corresponding to the button
@@ -53,7 +83,6 @@ class StoreS(State):
     def Go(self):
         print("go StoreS")
         pass
-
 
 class PlayS(State):
     def __init__(self):
@@ -65,7 +94,6 @@ class PlayS(State):
         print("go PlayS")
         pass
 
-
 class QuickVolS(State):
     def __init__(self):
         # update variable corresponding to the button
@@ -75,7 +103,6 @@ class QuickVolS(State):
     def Go(self):
         print("go QuickVolS")
         pass
-
 
 class SetVolS(State):
     def __init__(self):
@@ -87,7 +114,6 @@ class SetVolS(State):
         print("go SetVolS")
         pass
 
-
 class SetInstS(State):
     def __init__(self):
         # update variable corresponding to the button
@@ -98,7 +124,6 @@ class SetInstS(State):
         print("go SetInstS")
         pass
 
-
 class SetFilterS(State):
     def __init__(self):
         # update variable corresponding to the button
@@ -108,7 +133,6 @@ class SetFilterS(State):
     def Go(self):
         print("go SetFilterS")
         pass
-
 
 class SetOutS(State):
     def __init__(self):
@@ -123,7 +147,6 @@ class SetOutS(State):
 
 ##============================================================================
 
-
 class Transition():
     def __init__(self, toState):
         self.toState = toState
@@ -133,12 +156,11 @@ class Transition():
 
     def Go(self):
         #self.toState = toState
-        #self.curState = toState
-        #self.curStateName = toState
+        #self.SetState(self.toState)
+        #self.curStateName = self.toState
         print("trans go")
 
 ##============================================================================
-
 
 class SimpleFSM(object):
     def __init__(self, char):
@@ -148,6 +170,7 @@ class SimpleFSM(object):
         self.curState = None    # current state
         self.curStateName = None
         self.trans = None       # current transition
+        self.transName = None
         print("Init simpFSM")
 
     def SetState(self, stateName): # look at string passed within dictionary
@@ -157,6 +180,7 @@ class SimpleFSM(object):
 
     def Transition(self, transName):  
         self.trans = self.transitions[transName]
+        self.transName = transName
         print("trans simpFSM")
 
     def Go(self):
@@ -164,8 +188,10 @@ class SimpleFSM(object):
             self.trans.Go()    # execute that transition
             self.SetState(self.trans.toState) # set to transitioned state
             self.trans = None       # reset transition to None
+            self.transName = None
+            print("in state " + self.curStateName)
         self.curState.Go()     # execute current state
-        print("go simpfsm")
+        #print("go simpfsm")
 
 ##============================================================================ 
 # holds all character attributes and properties
@@ -223,56 +249,56 @@ if __name__ == "__main__":
 
     print("enter main now")
     while inFSM:
-        match mainFSM.FSM.curStateName:
-            case "InitS":
-                #lcd.write_lcd("Synth Start    F", "A B C D E      G") # add when import lcd
-                print("Synth Start    F")
-                mainFSM.FSM.Transition("toWaitS")
-                time.sleep(5)
-                pass
+        matchName = mainFSM.FSM.curStateName
+        if matchName == "InitS":
+            #lcd.write_lcd("Synth Start    F", "A B C D E      G") # add when import lcd
+            print("Synth Start    F")
+            mainFSM.FSM.Transition("toWaitS")
+            time.sleep(5)
+            pass
 
-            case "WaitS":
-                mainFSM.FSM.Transition("toInitS")
-                mainFSM.FSM.curStateName = "InitS"
-                print("State 2")
-                time.sleep(5)
-                pass
+        elif matchName == "WaitS":
+            mainFSM.FSM.Transition("toInitS")
+            mainFSM.FSM.curStateName = "InitS"
+            print("State 2")
+            time.sleep(5)
+            pass
 
-            case "RecordS":
+        elif matchName == "RecordS":
 
-                pass
+            pass
 
-            case "StoreS":
+        elif matchName == "StoreS":
 
-                pass
+            pass
+        
+        elif matchName == "PlayS":
+
+            pass
+
+        elif matchName == "QuickVol":
+
+            pass
+
+        elif matchName == "SetVolS":
+
+            pass
             
-            case "PlayS":
+        elif matchName == "SetInstS":
 
-                pass
+            pass
 
-            case "QuickVol":
+        elif matchName == "SetFilterS":
 
-                pass
+            pass
 
-            case "SetVolS":
+        elif matchName == "SetOutS":
 
-                pass
-                
-            case "SetInstS":
+            pass   
 
-                pass
-
-            case "SetFilterS":
-
-                pass
-
-            case "SetOutS":
-
-                pass   
-
-            case _:
-
-                pass
+        else:
+            print("edge case: FAIL")
+            pass
 
         mainFSM.FSM.Go()
         pass
