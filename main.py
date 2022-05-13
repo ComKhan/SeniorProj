@@ -59,36 +59,112 @@ if __name__ == "__main__":
     # add states instances
     mainFSM.FSM.states["InitS"] = fsm.InitS() #instance of Set state stored within state dictionary inside FSM
     mainFSM.FSM.states["WaitS"] = fsm.WaitS()
+    mainFSM.FSM.states["FilterS"] = fsm.FilterS()
+    mainFSM.FSM.states["InstS"] = fsm.InstS()
+    mainFSM.FSM.states["OutputS"] = fsm.OutputS()
+    mainFSM.FSM.states["RecordS"] = fsm.RecordS()
+    mainFSM.FSM.states["StoreS"] = fsm.StoreS()
+    mainFSM.FSM.states["PlayS"] = fsm.PlayS()
+    mainFSM.FSM.states["QuickVolS"] = fsm.QuickVolS()
+    mainFSM.FSM.states["SetVolS"] = fsm.SetVolS()
     mainFSM.FSM.transitions["toWaitS"] = fsm.Transition("WaitS") # create instance of those transitions and store them within trans dictionary
     mainFSM.FSM.transitions["toInitS"] = fsm.Transition("InitS")
+    mainFSM.FSM.transitions["toFilterS"] = fsm.Transition("FilterS")
+    mainFSM.FSM.transitions["toInstS"] = fsm.Transition("InstS")
+    mainFSM.FSM.transitions["toOutputS"] = fsm.Transition("OutputS")
+    mainFSM.FSM.transitions["toRecordS"] = fsm.Transition("RecordS")
+    mainFSM.FSM.transitions["toStoreS"] = fsm.Transition("StoreS")
+    mainFSM.FSM.transitions["toPlayS"] = fsm.Transition("PlayS")
+    mainFSM.FSM.transitions["toQuickVolS"] = fsm.Transition("QuickVolS")
+    mainFSM.FSM.transitions["toSetVolS"] = fsm.Transition("SetVolS")
     
     #set initial state
     mainFSM.FSM.SetState("InitS")
     
     print("enter main now")
     while inFSM:
+        mainFSM.FSM.Go()
         testName = mainFSM.FSM.curStateName
         testTrans = mainFSM.FSM.trans
-        if testTrans == None:
+        
+        if testTrans == None: # run and check for transitions
             #print("trans == None")
-            mainFSM.FSM.Go()
-            if btns.clickA.implement == False: # set up for each button
-                print("state A clicked button")
+            #mainFSM.FSM.Go()
+            if (testName == "WaitS") | (testName == "InitS"):
+                if btns.clickA.implement == False: # set up for each button
+                    mainFSM.FSM.Transition("toFilterS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickA.implement = True
+
+                if btns.clickB.implement == False: # set up for each button
+                    mainFSM.FSM.Transition("toInstS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickB.implement = True
+
+                if btns.clickC.implement == False: # set up for each button
+                    #mainFSM.FSM.Transition("toInitS")
+                    #testTrans = mainFSM.FSM.trans
+                    print("no use for btn in this state")
+                    btns.clickC.implement = True
+
+                if btns.clickD.implement == False: # set up for each button
+                    mainFSM.FSM.Transition("toOutputS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickD.implement = True
+
+                if btns.clickE.implement == False: # set up for each button
+                    mainFSM.FSM.Transition("toRecordS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickD.implement = True
+
+                if btns.clickF.implement == False: # set up for each button
+                    mainFSM.FSM.Transition("toSetVolS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickF.implement = True
+
+                if btns.clickG.implement == False: # set up for each button
+                    mainFSM.FSM.Transition("toQuickVolS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickG.implement = True
+
+            if ((testName == "SetVolS") | (testName == "FilterS") | (testName == "InstS") | 
+                (testName == "QuickVolS") | (testName == "SetVolS") | (testName == "OutputS")):
                 mainFSM.FSM.Transition("toWaitS")
                 testTrans = mainFSM.FSM.trans
-                btns.clickA.implement = True
-            #print("go")
-            if btns.clickB.implement == False: # set up for each button
-                print("state B clicked button")
-                mainFSM.FSM.Transition("toInitS")
-                testTrans = mainFSM.FSM.trans
-                btns.clickB.implement = True
-        
+                
+            if (testName == "RecordS"): # stuck on: button doesn't reset to false
+                if btns.clickE.implement == False:
+                    mainFSM.FSM.Transition("toStoreS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickE.implement = True
 
-        else:
+            if (testName == "StoreS"):
+                if btns.clickC.implement == False:
+                    mainFSM.FSM.Transition("toPlayS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickC.implement = True
+
+                if btns.clickD.implement == False:
+                    mainFSM.FSM.Transition("toWaitS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickD.implement = True
+
+            if (testName == "PlayS"):
+                if btns.clickC.implement == False:
+                    mainFSM.FSM.Transition("toPlayS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickC.implement = True
+
+                if btns.clickD.implement == False:
+                    mainFSM.FSM.Transition("toWaitS")
+                    testTrans = mainFSM.FSM.trans
+                    btns.clickD.implement = True
+
+        else: # implement transition and run
             #print("edge case FAIL")
-            mainFSM.FSM.Transition(mainFSM.FSM.transName)
             mainFSM.FSM.Go()
+            mainFSM.FSM.Transition(mainFSM.FSM.transName)
+            
 
         
         pass
@@ -130,35 +206,3 @@ if __name__ == "__main__":
             # End Testing Code
 
             pass'''
-
-'''case "RecordS":
-
-        pass
-
-    case "StoreS":
-
-        pass
-    
-    case "PlayS":
-
-        pass
-
-    case "QuickVol":
-
-        pass
-
-    case "SetVolS":
-
-        pass
-        
-    case "SetInstS":
-
-        pass
-
-    case "SetFilterS":
-
-        pass
-
-    case "SetOutS":
-
-        pass'''   
