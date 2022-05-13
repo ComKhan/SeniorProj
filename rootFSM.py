@@ -12,13 +12,13 @@ import main
 #import lcd
 
 State = type("States", (object,), {})
-btn1 = Button(16)
-btn2 = Button(6)
-btn3 = Button(5)
-btn4 = Button(0)
-btn5 = Button(4)
-btn6 = Button(3)
-btn7 = Button(2)
+btn1 = Button(16) #Filter, Yes
+btn2 = Button(6) # Inst
+btn3 = Button(5) # No
+btn4 = Button(0) # Output
+btn5 = Button(4) # Record
+btn6 = Button(3) # Vol Dwn
+btn7 = Button(2) # Vol Up
 
 class InitS(State):
     def __init__(self):
@@ -28,8 +28,15 @@ class InitS(State):
 
     def Go(self):
         #btns.initialize()
-        #print("go InitS")
+        print("go InitS")
+        time.sleep(2)
         btn1.when_pressed = btns.clickA.clicked
+        btn2.when_pressed = btns.clickB.clicked
+        btn3.when_pressed = btns.clickC.clicked
+        btn4.when_pressed = btns.clickD.clicked
+        btn5.when_pressed = btns.clickE.clicked
+        btn6.when_pressed = btns.clickF.clicked
+        btn7.when_pressed = btns.clickG.clicked
         '''if btn1.is_pressed: # wait  for button clicks within states
             btns.clickA.clicked()
             print("state A clicked button")'''
@@ -43,55 +50,57 @@ class InitS(State):
 class WaitS(State):
     def __init__(self):
         # update variable corresponding to the button
-        print("Init WaitS")
+        
         pass
 
     def Go(self):
         #print("go WaitS")
+        btn1.when_pressed = btns.clickA.clicked
         btn2.when_pressed = btns.clickB.clicked
-        '''btns.btn2.when_pressed = btns.clickB.clicked()
-        btns.btn3.when_pressed = btns.clickC.clicked()
-        btns.btn4.when_pressed = btns.clickD.clicked()
-        btns.btn5.when_pressed = btns.clickE.clicked()
-        btns.btn6.when_pressed = btns.clickF.clicked()
-        btns.btn7.when_pressed = btns.clickG.clicked()'''
+        btn3.when_pressed = btns.clickC.clicked
+        btn4.when_pressed = btns.clickD.clicked
+        btn5.when_pressed = btns.clickE.clicked
+        btn6.when_pressed = btns.clickF.clicked
+        btn7.when_pressed = btns.clickG.clicked
 
         # Testing code: Remove for full implementation
         #mainFSM.FSM.Transition("toInitS")
         #mainFSM.FSM.curStateName = "InitS"
-        print("State 2")
-        time.sleep(5)
+        
         pass
 
 
 class RecordS(State):
     def __init__(self):
         # update variable corresponding to the button
-        print("Init RecordS")
+        
         pass
 
     def Go(self):
-        print("go RecordS")
+        btn5.when_pressed = btns.clickE.clicked
+
         pass
 
 class StoreS(State):
     def __init__(self):
         # update variable corresponding to the button
-        print("Init StoreS")
+        
         pass
 
     def Go(self):
-        print("go StoreS")
+        btn3.when_pressed = btns.clickC.clicked
+        btn4.when_pressed = btns.clickD.clicked
         pass
 
 class PlayS(State):
     def __init__(self):
         # update variable corresponding to the button
-        print("Init PlayS")
+        
         pass
 
     def Go(self):
-        print("go PlayS")
+        btn3.when_pressed = btns.clickC.clicked
+        btn4.when_pressed = btns.clickD.clicked
         pass
 
 class QuickVolS(State):
@@ -114,7 +123,7 @@ class SetVolS(State):
         print("go SetVolS")
         pass
 
-class SetInstS(State):
+class InstS(State):
     def __init__(self):
         # update variable corresponding to the button
         print("Init SetInstS")
@@ -124,7 +133,7 @@ class SetInstS(State):
         print("go SetInstS")
         pass
 
-class SetFilterS(State):
+class FilterS(State):
     def __init__(self):
         # update variable corresponding to the button
         print("Init SetFilterS")
@@ -134,7 +143,7 @@ class SetFilterS(State):
         print("go SetFilterS")
         pass
 
-class SetOutS(State):
+class OutputS(State):
     def __init__(self):
         # update variable corresponding to the button
         print("Init SetOutS")
