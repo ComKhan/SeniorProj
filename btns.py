@@ -1,8 +1,9 @@
 # Updates variables and settings upon a button click
 # Button Setup:
-# Btn1      Btn2    Btn3    Btn4    Btn5
+# Btn6 F - Vol Down     Btn7 G - Vol Up
+# Btn1 A    Btn2 B  Btn3 C  Btn4 D  Btn5 E
 # FilterMD  Inst            OutMd   Record 
-# Yes       No
+#                   Yes     No       
 
 import array as arr
 from fcntl import F_SEAL_SEAL
@@ -18,19 +19,7 @@ instSet = ["INSTA", "INSTB", "INSTC"] # cycles through instruments, correspond t
 volSet = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # make separate function that stops at max and min instead of looping around
 filterSet = ["LIVEMD", "AUTOTUNEMD"]
 outputSet = ["SJACK", "LJACK", "MIDI", "NONE"]
-
-
-'''def initialize():
-    # Button init variables
-    global btn1, btn2, btn3, btn4, btn5, btn6, btn7
-    btn1 = Button(16)
-    btn2 = Button(6)
-    btn3 = Button(5)
-    btn4 = Button(0)
-    btn5 = Button(4)
-    btn6 = Button(3)
-    btn7 = Button(2)'''
-    
+ynSet = ["Yes", "No"]
 
 
 # when a button is clicked you select the corresponding clicks array to cycle through
@@ -66,41 +55,11 @@ class btnClk: # need two -- reset index upon click and store index
 ##=======================================================================
 # button implementation
 #recordBtn = btnClk(recordSet, "Record Button")
-clickA = btnClk(recordSet, "A")
+clickA = btnClk(filterSet, "A")
 clickB = btnClk(instSet, "B")
+clickC = btnClk(ynSet, "C")
+clickD = btnClk(outputSet, "D")
+clickE = btnClk(recordSet, "E")
+clickF = btnClk(volSet, "F") #create function for vol down clicked
+clickG = btnClk(volSet, "G") 
 #global btn1, btn2, btn3, btn4, btn5, btn6, btn7
-'''
-print("GPIO SETUP")
-# GPIO SETUP
-GPIO.setwarnings(False) # check function
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(36, GPIO.IN) # BTN1a
-GPIO.setup(31, GPIO.IN) # BTN2
-GPIO.setup(29, GPIO.IN) # BTN3
-GPIO.setup(27, GPIO.IN) # BTN4
-GPIO.setup(7, GPIO.IN) # BTN5
-GPIO.setup(5, GPIO.IN) # BTN6
-GPIO.setup(3, GPIO.IN) # BTN7
-'''
-'''print("gpiozero button functions")
-'''
-'''if __name__ == "__main__":
-    run = True
-    
-    while run:
-        def btnTest():
-            print("BTN clicked!")
-        btn1 = Button(16, False)
-        btn2 = Button(6)
-        btn3 = Button(5)
-        btn4 = Button(0)
-        btn5 = Button(4)
-        btn6 = Button(3)
-        btn7 = Button(2)
-        btn1.when_pressed = btnTest
-        btn2.when_pressed = btnTest
-        btn3.when_pressed = btnTest
-        btn4.when_pressed = btnTest
-        btn5.when_pressed = btnTest
-        btn6.when_pressed = btnTest
-        btn7.when_pressed = btnTest'''
