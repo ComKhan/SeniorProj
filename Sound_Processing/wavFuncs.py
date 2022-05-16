@@ -42,7 +42,7 @@ def recording(time=3, Fs=48000):
     sd.wait()
     print('done recording')
     write('recording.wav', Fs, myrecording)
-    sd.play(myrecording,Fs)
+    #sd.play(myrecording,Fs)
     return myrecording[:, 0]
 
 
