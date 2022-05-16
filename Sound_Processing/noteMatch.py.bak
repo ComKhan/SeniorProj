@@ -1,0 +1,94 @@
+from scipy.io.wavfile import read, write
+import matplotlib.pyplot as plt
+import sounddevice as sd
+import numpy as np
+import math
+import time
+import wavFuncs
+
+def matchnote(freq):
+    notes = {
+    32.70 :"Notes/C1.wav",
+    36.71 :"Notes/D1.wav",
+    41.2  :"Notes/E1.wav",
+    43.65 :"Notes/F1.wav",
+    49.00 :"Notes/G1.wav",
+    55.00 :"Notes/A1.wav",
+    61.74 :"Notes/B1.wav",
+    65.41 :"Notes/C2.wav",
+    73.42 :"Notes/D2.wav",
+    82.41 :"Notes/E2.wav",
+    87.31 :"Notes/F2.wav",
+    98.00 :"Notes/G2.wav",
+    110.0 :"Notes/A2.wav",
+    123.47:"Notes/B2.wav",
+    130.81:"Notes/C3.wav",
+    146.83:"Notes/D3.wav",
+    164.81:"Notes/E3.wav",
+    174.61:"Notes/F3.wav",
+    196.00:"Notes/G3.wav",
+    220.00:"Notes/A3.wav",
+    246.94:"Notes/B3.wav",
+    261.63:"Notes/C4.wav",
+    293.66:"Notes/D4.wav",
+    329.63:"Notes/E4.wav",
+    349.23:"Notes/F4.wav",
+    392.00:"Notes/G4.wav",
+    440.00:"Notes/A4.wav",
+    493.88:"Notes/B4.wav",
+    523.25:"Notes/C5.wav",
+    587.33:"Notes/D5.wav",
+    659.25:"Notes/E5.wav",
+    698.46:"Notes/F5.wav",
+    783.99:"Notes/G5.wav",
+    880.00:"Notes/A5.wav",
+    987.77:"Notes/B5.wav" 
+    }
+
+    notefreqs = [
+    32.70 ,
+    36.71 ,
+    41.2  ,
+    43.65 ,
+    49.00 ,
+    55.00 ,
+    61.74 ,
+    65.41 ,
+    73.42 ,
+    82.41 ,
+    87.31 ,
+    98.00 ,
+    110.0 ,
+    123.47,
+    130.81,
+    146.83,
+    164.81,
+    174.61,
+    196.00,
+    220.00,
+    246.94,
+    261.63,
+    293.66,
+    329.63,
+    349.23,
+    392.00,
+    440.00,
+    493.88,
+    523.25,
+    587.33,
+    659.25,
+    698.46,
+    783.99,
+    880.00,
+    987.77 
+    ]
+    
+    val =(np.abs(np.array(notefreqs)-freq)).argmin()
+    return notes[notefreqs[val]]
+
+def autoTune(soundFile, time):
+    freq = wavFuncs.hps(soundFile, time)
+    print(freq)
+    print(matchnote(freq))
+
+autoTune(wavFuncs.recording(1), 1)

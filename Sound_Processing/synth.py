@@ -2,6 +2,7 @@ from scipy.io.wavfile import read, write
 import matplotlib.pyplot as plt
 import sounddevice as sd
 import numpy as np
+import math
 import time
 import wavFuncs
 
@@ -28,7 +29,7 @@ def plotWaveform(sound, time = 0.05):
 
     if type(sound) == int:
         freq = sound
-        y = np.int16(2000 * np.sin(2 * pi * freq * x))
+        y = np.int16(2000 * np.sin(2 * math.pi * freq * x))
 
     plt.plot(x,y)
     plt.xlabel("Time")
@@ -44,7 +45,7 @@ def setPer(Amplitude, tfreq, instrument_file, runtime):
     print(tfreq/afreq)
     y = y[0:int(afreq/tfreq):len(y)]
     print(len(y))
-    y = list(map(lambda num: num*Amplitude, y))
+    y = [num*Amplitude for num in y]
     print(len(y))
     y = runtime/(len(y)/FS) * y
     sd.play(y, FS)

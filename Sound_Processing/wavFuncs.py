@@ -143,7 +143,7 @@ def hps(sound, time=0.02, Fs=48000):
     axs[4].plot(x, y)
     matplotlib.pyplot.show()
     write('hps.wav', Fs, y)
-    return xf, yff
+    return xf[yff.argmax()]
 
 
 def plotfft(sound, time=3, Fs=48000):
@@ -185,7 +185,7 @@ def plotfft(sound, time=3, Fs=48000):
     plt.show()
 
 
-# plotfft('recording.wav')
+#plotfft('hps.wav')
 #tim = .05
 #freq1 = maxfft(recording(tim), tim)
 #freq2 = maxffthps('FFT.wav', tim)
