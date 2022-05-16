@@ -86,11 +86,9 @@ def matchnote(freq):
 
 def autoTune(soundFile, time):
     freq = wavFuncs.hps(soundFile, time)
-    return matchnote(freq)
+    Fs, y = read(matchnote(freq))
+    sd.play(y[:Fs], Fs)
+    sd.wait()
 
 
 audio = autoTune(wavFuncs.recording(1), 1)
-print(audio)
-Fs, y = read(audio)
-sd.play(y[:Fs], Fs)
-sd.wait()
