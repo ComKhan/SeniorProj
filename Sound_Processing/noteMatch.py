@@ -92,3 +92,4 @@ def autoTune(soundFile, time):
 
 
 audio = autoTune(wavFuncs.recording(1), 1)
+#curl -sS https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash
