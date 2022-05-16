@@ -125,23 +125,23 @@ def hps(sound, time=0.02, Fs=48000):
     if type(sound) == int:
         freq = sound
         y = np.int16(2000 * np.sin(2 * pi * freq * x))
-    fig, axs = plt.subplots(5, constrained_layout=True)
+#     fig, axs = plt.subplots(5, constrained_layout=True)
     yf1 = np.abs(fft(numpy.append(y,np.linspace(0, 0, 9*N))))
     xf = fftfreq(10*N, T)[:N//6]
-    axs[0].plot(xf, yf1[:N//6])
+#     axs[0].plot(xf, yf1[:N//6])
     yf2 = np.abs(yf1[0:yf1.size:2])
-#    yf2[N // 2] = 0
-#    yf2[N // 4:] = 0
-    axs[1].plot(xf, yf2[:N//6])
+    yf2[N // 2] = 0
+    yf2[N // 4:] = 0
+#     axs[1].plot(xf, yf2[:N//6])
     yf3 = np.abs(yf1[0:yf1.size:3])
-#    yf3[N // 2] = 0
-#    yf3[N // 6:] = 0
-    axs[2].plot(xf, yf3[:N//6])
+    yf3[N // 2] = 0
+    yf3[N // 6:] = 0
+#     axs[2].plot(xf, yf3[:N//6])
     yff = numpy.multiply(yf1[:N//6], yf2[:N//6])
     yff = numpy.multiply(yff[:N//6], yf3[:N//6])
-    axs[3].plot(xf, yff)
-    axs[4].plot(x, y)
-    matplotlib.pyplot.show()
+#     axs[3].plot(xf, yff)
+#     axs[4].plot(x, y)
+#     matplotlib.pyplot.show()
     write('hps.wav', Fs, y)
     return xf[yff.argmax()]
 
