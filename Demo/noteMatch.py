@@ -94,6 +94,8 @@ def autoTune(soundFile, time):
 
     filt_out,freq = process_data(p_array, chunk, samplerate)
     fileName = matchnote(freq)
+    
+    #filename = matchnote(hps(recording(1),1))
     #Fs, y = read(fileName)
     #sd.play(y, Fs)
     #sd.wait()
