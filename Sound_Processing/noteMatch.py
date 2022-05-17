@@ -5,6 +5,8 @@ import pyaudio
 import wave
 import numpy as np
 import wavFuncs
+from demo_file import *
+from fir_filter import *
 
 def matchnote(freq):
     notes = {
@@ -87,7 +89,10 @@ def matchnote(freq):
     return notes[notefreqs[val]]
 
 def autoTune(soundFile, time):
-    freq = wavFuncs.hps(soundFile, time)
+    p_array, samplerate = sf.read(soundFile)
+    p_array.tolist()
+
+    filt_out,freq = process_data(p_array, chunk, samplerate)
     fileName = matchnote(freq)
     #Fs, y = read(fileName)
     #sd.play(y, Fs)
