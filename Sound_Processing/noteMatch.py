@@ -1,6 +1,8 @@
 import matplotlib.pyplot
 from scipy.io.wavfile import read, write
 import sounddevice as sd
+import pyaudio
+import wave
 import numpy as np
 import wavFuncs
 
@@ -86,10 +88,30 @@ def matchnote(freq):
 
 def autoTune(soundFile, time):
     freq = wavFuncs.hps(soundFile, time)
-    Fs, y = read(matchnote(freq))
-    sd.play(y[:Fs], Fs)
-    sd.wait()
+    fileName = matchnote(freq)
+    #Fs, y = read(fileName)
+    #sd.play(y, Fs)
+    #sd.wait()
+    
+    chunk = 4096
+
+    wf = wave.open(fileName,'rb')
+    p = pyaudio.PyAudio()
+    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+        channels= wf.getnchannels(),
+        rate=wf.getframerate(),
+        output=True)
+    data = wf.readframes(chunk)
+    while len(data) > 0:
+        stream.write(data)
+        data = wf.readframes(chunk)
+
+    stream.stop_stream()
+    stream.close()
+
+    p.terminate()
+    
 
 
-audio = autoTune(wavFuncs.recording(1), 1)
+audio = autoTune(wavFuncs.recording(1), 0.1)
 #curl -sS https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash
