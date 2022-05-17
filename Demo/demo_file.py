@@ -11,10 +11,6 @@ import soundfile as sf
 
 
 def process_data(process_val, chunk_process, fs):
-    # use list comprehension to create a list of only single values (no tuples)
-    # time_domain_vals_process = [x[y] for x in process_val for y in range(0,int(chunk_process))]
-    # print('data size')
-
 
     filtered_output = fir_filt(process_val)
 
@@ -66,7 +62,6 @@ def process_data(process_val, chunk_process, fs):
     while freq_found == 0:
         # compare = int(corr_vals[i])
         if (corr_vals[f] >= 40) and (corr_vals[f] < 4800):
-            print(corr_vals[f])
             final_freq_process = corr_vals[f]
             freq_found = 1
         f = f + 1

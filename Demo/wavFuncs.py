@@ -38,7 +38,7 @@ def maxffthps(sound, time=3, Fs=48000):
 # records a clip using the default microphone of the device
 def recording(time=3, Fs=48000):
     print('Now Recording')
-    myrecording = sd.rec(int(time * Fs), Fs, 2)
+    myrecording = sd.rec(int(time * Fs), Fs, 1)
     sd.wait()
     print('done recording')
     write('recording.wav', Fs, myrecording)

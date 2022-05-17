@@ -89,19 +89,20 @@ def matchnote(freq):
     return notes[notefreqs[val]]
 
 def autoTune(soundFile, time):
+    chunk = 4096
     p_array, samplerate = sf.read(soundFile)
-    p_array.tolist()
+    p_array = list(p_array)
 
     filt_out,freq = process_data(p_array, chunk, samplerate)
     fileName = matchnote(freq)
+    
+    print(freq)
     
     #filename = matchnote(hps(recording(1),1))
     #Fs, y = read(fileName)
     #sd.play(y, Fs)
     #sd.wait()
     
-    chunk = 4096
-
     wf = wave.open(fileName,'rb')
     p = pyaudio.PyAudio()
     stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
@@ -119,6 +120,6 @@ def autoTune(soundFile, time):
     p.terminate()
     
 
-
-audio = autoTune(wavFuncs.recording(1), 0.1)
+wavFuncs.recording(1)
+audio = autoTune('recording.wav', 0.1)
 #curl -sS https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash
