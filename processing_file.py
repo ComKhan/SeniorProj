@@ -2,7 +2,8 @@ import multiprocessing
 import pyaudio
 import wave
 from get_functions import get_data, get_freq
-
+import btns
+import rootFSM as fsm
 
 
 # set all base requirements for class creation
@@ -29,6 +30,8 @@ queue_count.value = 0
 
 final_freq = multiprocessing.Array('f', 4096)
 final_vol = multiprocessing.Array('i', 4096)
+
+btns.clickE.implement = True
 
 if __name__ == "__main__":
     q = multiprocessing.Queue()
