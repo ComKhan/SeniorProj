@@ -1,5 +1,6 @@
 import multiprocessing
 from wav_2_list import wav_2_list
+from noteMatch import *
 
 
 def get_data(obj, sample_rate1, chunk1, q1, data1, aud):
@@ -139,6 +140,8 @@ def play_freq(q5, q6, flag2):
         if not q5.empty():
             freq_val = q5.get()
             print(freq_val)
+            autoTune(freq_val, 1)
+
 
         # if not q6.empty():
         # vol_val = q6.get()
@@ -149,6 +152,7 @@ def play_freq(q5, q6, flag2):
         if not q5.empty():
             freq_val = q5.get()
             print(freq_val)
+            autoTune(freq_val, 1)
 
         # if not q6.empty():
         # vol_val = q6.get()
