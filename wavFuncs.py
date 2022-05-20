@@ -8,6 +8,7 @@ from scipy.io.wavfile import read, write
 from scipy.fft import fft, fftfreq
 import numpy as np
 import time as ti
+import soundfile as sf
 
 
 def liverec(myarray, time=3, Fs=48000, freq=150):
@@ -41,10 +42,10 @@ def recording(time=3, Fs=48000):
     myrecording = sd.rec(int(time * Fs), Fs, 1)
     sd.wait()
     print('done recording')
-    print(myrecording)
     write('recording.wav', Fs, myrecording)
+    data_array, samplerate = sf.read('recording.wav')
     #sd.play(myrecording,Fs)
-    return myrecording[:, 0]
+    return data_array
 
 
 # Generates an Envelope for a set frequency signal
@@ -195,5 +196,3 @@ def plotfft(sound, time=3, Fs=48000):
 # freqADSR(freq)
 # Fs, y = read('recording.wav')
 # liverec(y)
-
-recording(1, 48000)

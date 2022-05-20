@@ -111,25 +111,25 @@ def autoTune(freq, time):
     print(freq)
 #     playsound(fileName)
     
-    Fs, y = read(fileName)
-    sd.play(y, Fs)
-    sd.wait()
+#     Fs, y = read(fileName)
+#     sd.play(y, Fs)
+#     sd.wait()
 #     
-#     wf = wave.open(fileName,'rb')
-#     p1 = pyaudio.PyAudio()
-#     stream1 = p1.open(format=p1.get_format_from_width(wf.getsampwidth()),
-#         channels= wf.getnchannels(),
-#         rate=wf.getframerate(),
-#         output=True)
-#     data = wf.readframes(chunk)
-#     while len(data) > 0:
-#         stream1.write(data)
-#         data = wf.readframes(chunk)
-# 
-#     stream1.stop_stream()
-#     stream1.close()
-# 
-#     p1.terminate()
+    wf = wave.open(fileName,'rb')
+    p1 = pyaudio.PyAudio()
+    stream1 = p1.open(format=p1.get_format_from_width(wf.getsampwidth()),
+        channels= wf.getnchannels(),
+        rate=wf.getframerate(),
+        output=True)
+    data = wf.readframes(chunk)
+    while len(data) > 0:
+        stream1.write(data)
+        data = wf.readframes(chunk)
+
+    stream1.stop_stream()
+    stream1.close()
+
+    p1.terminate()
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
@@ -146,5 +146,3 @@ def autoTune(freq, time):
 #     if clickE.implement == False:
 #         break
 #curl -sS https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash
-
-autoTune(100, 1)

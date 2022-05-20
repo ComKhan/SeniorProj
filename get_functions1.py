@@ -1,25 +1,32 @@
 import multiprocessing
 from wav_2_list import wav_2_list
 from noteMatch import *
+from wavFuncs import *
 
 
-def get_data(obj, sample_rate1, chunk1, q1, data1, aud):
+def get_data(sample_rate1, chunk1, q1, data1):
     v = 0
     data1.value = 0
     print("Recording")
 
     # start stream
-    obj.start_stream()
+#     obj.start_stream()
 
     # set value to count to
-    while v != 74:
-        # ADD INTERRUPT HERE
+    while v != 5:
+#         # ADD INTERRUPT HERE
+# 
+#         # read data from usb mic
+#         val = (obj.read(chunk1, exception_on_overflow=False))
+# 
+#         # put data into queue
+#         q1.put(val)
 
-        # read data from usb mic
-        val = (obj.read(chunk1, exception_on_overflow=False))
+        #CONRADS CODE
+        
+        liverec = recording(1)
+        q1.put(liverec)
 
-        # put data into queue
-        q1.put(val)
 
         # incrementer to keep track of how many things were put in queue
         v = v + 1
@@ -32,13 +39,13 @@ def get_data(obj, sample_rate1, chunk1, q1, data1, aud):
     # setting data1.value to 0 for done processing
     data1.value = 0
 
-    obj.stop_stream()
-    obj.close()
-    aud.terminate()
+#     obj.stop_stream()
+#     obj.close()
+#     aud.terminate()
     print("finished recording")
 
 
-def get_freq(sample_rate2, chunk2, q2, data2, f_freq, f_vol, queue_count1, aud2, q3, q4, flag1):
+def get_freq(sample_rate2, chunk2, q2, data2, f_freq, f_vol, queue_count1,q3, q4, flag1):
     d = 0
     flag1.value = 0
 
@@ -71,7 +78,7 @@ def get_freq(sample_rate2, chunk2, q2, data2, f_freq, f_vol, queue_count1, aud2,
             queue_count1.value = store + 1
 
             # if you've hit the desired number of seconds for processing then start run auto correlation
-            if len(process_array) == 12:
+            if len(process_array) == 1:
                 # write to a wav for processing
                 time_vals, freq = wav_2_list(sample_rate2, process_array, aud2, chunk2)
 
@@ -90,7 +97,7 @@ def get_freq(sample_rate2, chunk2, q2, data2, f_freq, f_vol, queue_count1, aud2,
 
     while not q2.empty():
 
-        if len(process_array) == 12:
+        if len(process_array) == 1:
             # write to wav
             time_vals, freq = wav_2_list(sample_rate2, process_array, aud2, chunk2)
 
