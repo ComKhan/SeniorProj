@@ -5,17 +5,17 @@ import pyaudio
 import wave
 import numpy as np
 import wavFuncs
-from demo_file import *
+# from demo_file import *
 from fir_filter import *
-from btns_V1 import *
+# from btns_V1 import *
 
-btn1 = Button(16) #Filter, Yes
-btn2 = Button(6) # Inst
-btn3 = Button(5) # No
-btn4 = Button(0) # Output
-btn5 = Button(4) # Record
-btn6 = Button(3) # Vol Dwn
-btn7 = Button(2) # Vol Up
+# btn1 = Button(16) #Filter, Yes
+# btn2 = Button(6) # Inst
+# btn3 = Button(5) # No
+# btn4 = Button(0) # Output
+# btn5 = Button(4) # Record
+# btn6 = Button(3) # Vol Dwn
+# btn7 = Button(2) # Vol Up
 
 
 
@@ -99,12 +99,12 @@ def matchnote(freq):
     val =(np.abs(np.array(notefreqs)-freq)).argmin()
     return notes[notefreqs[val]]
 
-def autoTune(soundFile, time):
+def autoTune(freq, time):
     chunk = 4096
-    p_array, samplerate = sf.read(soundFile)
-    p_array = list(p_array)
+    # p_array, samplerate = sf.read(soundFile)
+    # p_array = list(p_array)
 
-    filt_out,freq = process_data(p_array, chunk, samplerate)
+    # filt_out,freq = process_data(p_array, chunk, samplerate)
     fileName = matchnote(freq)
     
     print(freq)
@@ -130,18 +130,18 @@ def autoTune(soundFile, time):
 
     p.terminate()
     
-while True:
-    btn1.when_pressed = clickA.clicked
-    btn2.when_pressed = clickB.clicked
-    btn3.when_pressed = clickC.clicked
-    btn4.when_pressed = clickD.clicked
-    btn5.when_pressed = clickE.clicked
-    btn6.when_pressed = clickF.clicked
-    btn7.when_pressed = clickG.clicked
-    if clickC.implement == False:
-        wavFuncs.recording(1)
-        audio = autoTune('recording.wav', 0.1)
-        clickC.implement = True
+# while True:
+#     btn1.when_pressed = clickA.clicked
+#     btn2.when_pressed = clickB.clicked
+#     btn3.when_pressed = clickC.clicked
+#     btn4.when_pressed = clickD.clicked
+#     btn5.when_pressed = clickE.clicked
+#     btn6.when_pressed = clickF.clicked
+#     btn7.when_pressed = clickG.clicked
+#     if clickC.implement == False:
+#         wavFuncs.recording(1)
+#         audio = autoTune('recording.wav', 0.1)
+#         clickC.implement = True
 #     if clickE.implement == False:
 #         break
 #curl -sS https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash
