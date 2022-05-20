@@ -109,29 +109,27 @@ def autoTune(freq, time):
     fileName = matchnote(freq)
     
     print(freq)
-    sd.play(fileName)
+#     playsound(fileName)
+    
+    Fs, y = read(fileName)
+    sd.play(y, Fs)
     sd.wait()
-    
-    #filename = matchnote(hps(recording(1),1))
-    #Fs, y = read(fileName)
-    #sd.play(y, Fs)
-    #sd.wait()
-    
+#     
 #     wf = wave.open(fileName,'rb')
-#     p = pyaudio.PyAudio()
-#     stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+#     p1 = pyaudio.PyAudio()
+#     stream1 = p1.open(format=p1.get_format_from_width(wf.getsampwidth()),
 #         channels= wf.getnchannels(),
 #         rate=wf.getframerate(),
 #         output=True)
 #     data = wf.readframes(chunk)
 #     while len(data) > 0:
-#         stream.write(data)
+#         stream1.write(data)
 #         data = wf.readframes(chunk)
 # 
-#     stream.stop_stream()
-#     stream.close()
+#     stream1.stop_stream()
+#     stream1.close()
 # 
-#     p.terminate()
+#     p1.terminate()
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
@@ -149,4 +147,4 @@ def autoTune(freq, time):
 #         break
 #curl -sS https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash
 
-autoTune(500, 1)
+autoTune(100, 1)

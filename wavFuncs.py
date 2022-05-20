@@ -41,6 +41,7 @@ def recording(time=3, Fs=48000):
     myrecording = sd.rec(int(time * Fs), Fs, 1)
     sd.wait()
     print('done recording')
+    print(myrecording)
     write('recording.wav', Fs, myrecording)
     #sd.play(myrecording,Fs)
     return myrecording[:, 0]
@@ -194,3 +195,5 @@ def plotfft(sound, time=3, Fs=48000):
 # freqADSR(freq)
 # Fs, y = read('recording.wav')
 # liverec(y)
+
+recording(1, 48000)
