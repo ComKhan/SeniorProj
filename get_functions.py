@@ -1,5 +1,7 @@
 import multiprocessing
 from wav_2_list import wav_2_list
+import rootFSM as fsm
+import btns
 
 def get_data(obj, sample_rate1, chunk1, q1, data1, aud, button_press1):
     v = 0
@@ -10,8 +12,11 @@ def get_data(obj, sample_rate1, chunk1, q1, data1, aud, button_press1):
     obj.start_stream()
 
     # set value to count to
-    while v != 74:
+    while button_press1 != 1:
         # ADD INTERRUPT HERE
+        fsm.btn5.when_pressed = btns.clickE.clicked
+        if (btns.clickE.clicked == False):
+            button_press1 = 1
 
         # read data from usb mic
         val = (obj.read(chunk1, exception_on_overflow=False))
@@ -26,6 +31,9 @@ def get_data(obj, sample_rate1, chunk1, q1, data1, aud, button_press1):
         data1.value = 1
 
         # ADD INTTERUPT HERE AS WELL MAYBE
+        fsm.btn5.when_pressed = btns.clickE.clicked
+        if (btns.clickE.clicked == False):
+            button_press1 = 1
 
     # setting data1.value to 0 for another condition
     data1.value = 0
