@@ -15,7 +15,7 @@ def get_data(obj, sample_rate1, chunk1, q1, data1, aud, button_press1):
     while button_press1.value != 1:
         # ADD INTERRUPT HERE
         fsm.btn5.when_pressed = btns.clickE.clicked
-        if (btns.clickE.clicked == False):
+        if (btns.clickE.implement == False):
             button_press1.value = 1
 
         # read data from usb mic
@@ -32,7 +32,7 @@ def get_data(obj, sample_rate1, chunk1, q1, data1, aud, button_press1):
 
         # ADD INTTERUPT HERE AS WELL MAYBE
         fsm.btn5.when_pressed = btns.clickE.clicked
-        if (btns.clickE.clicked == False):
+        if (btns.clickE.implement == False):
             button_press1.value = 1
 
     # setting data1.value to 0 for another condition
