@@ -1,4 +1,3 @@
-# This is Alberto's get_new_1 file but renamed when I was doing tests
 import multiprocessing
 import pyaudio
 import numpy as np
