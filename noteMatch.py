@@ -7,6 +7,7 @@ import numpy as np
 import wavFuncs
 # from demo_file import *
 from fir_filter import *
+from playsound import playsound
 # from btns_V1 import *
 
 # btn1 = Button(16) #Filter, Yes
@@ -108,27 +109,27 @@ def autoTune(freq, time):
     fileName = matchnote(freq)
     
     print(freq)
+#     playsound(fileName)
     
-    #filename = matchnote(hps(recording(1),1))
-    #Fs, y = read(fileName)
-    #sd.play(y, Fs)
-    #sd.wait()
-    
+#     Fs, y = read(fileName)
+#     sd.play(y, Fs)
+#     sd.wait()
+#     
     wf = wave.open(fileName,'rb')
-    p = pyaudio.PyAudio()
-    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+    p1 = pyaudio.PyAudio()
+    stream1 = p1.open(format=p1.get_format_from_width(wf.getsampwidth()),
         channels= wf.getnchannels(),
         rate=wf.getframerate(),
         output=True)
     data = wf.readframes(chunk)
     while len(data) > 0:
-        stream.write(data)
+        stream1.write(data)
         data = wf.readframes(chunk)
 
-    stream.stop_stream()
-    stream.close()
+    stream1.stop_stream()
+    stream1.close()
 
-    p.terminate()
+    p1.terminate()
     
 # while True:
 #     btn1.when_pressed = clickA.clicked

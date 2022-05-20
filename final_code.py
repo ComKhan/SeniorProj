@@ -13,11 +13,11 @@ chunk = 4096
 record_secs = 5
 dev_index = 1  # this is the device index (usb device specific port) connection in hardware VARIES
 # wav_output_filename = 'test6.wav'
-audio = pyaudio.PyAudio()
-
-stream = audio.open(format=form_1, rate=samp_rate, channels=chans,  \
-                    input_device_index=dev_index, input=True,  \
-                    frames_per_buffer=chunk)
+# audio = pyaudio.PyAudio()
+# 
+# stream = audio.open(format=form_1, rate=samp_rate, channels=chans,  \
+#                     input_device_index=dev_index, input=True,  \
+#                     frames_per_buffer=chunk)
 data = multiprocessing.Value('i')
 data.value = 0
 
@@ -37,9 +37,9 @@ if __name__ == "__main__":
     q_get = multiprocessing.Queue()
     q_freq = multiprocessing.Queue()
     q_vol =  multiprocessing.Queue()
-    p = multiprocessing.Process(target=get_data, args=(stream, samp_rate, chunk, q_get, data, audio))
+    p = multiprocessing.Process(target=get_data, args=(samp_rate, chunk, q_get, data))
     p1 = multiprocessing.Process(target=get_freq, args=(samp_rate, chunk, q_get, data, final_freq, final_vol, \
-                                                        queue_count, audio, q_freq, q_vol,flag))
+                                                        queue_count, q_freq, q_vol,flag))
     p2 = multiprocessing.Process(target=play_freq, args=(q_freq, q_vol,flag))
 
 
