@@ -2,6 +2,8 @@ import multiprocessing
 import rootFSM as fsm
 import btns
 from wav_2_list import wav_2_list
+import rootFSM as fsm
+import btns
 
 def get_data(obj, sample_rate1, chunk1, q1, data1, aud, button_press1):
     v = 0
