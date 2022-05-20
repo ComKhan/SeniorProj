@@ -7,6 +7,7 @@ import numpy as np
 import wavFuncs
 # from demo_file import *
 from fir_filter import *
+from playsound import playsound
 # from btns_V1 import *
 
 # btn1 = Button(16) #Filter, Yes
@@ -108,27 +109,29 @@ def autoTune(freq, time):
     fileName = matchnote(freq)
     
     print(freq)
+    sd.play(fileName)
+    sd.wait()
     
     #filename = matchnote(hps(recording(1),1))
     #Fs, y = read(fileName)
     #sd.play(y, Fs)
     #sd.wait()
     
-    wf = wave.open(fileName,'rb')
-    p = pyaudio.PyAudio()
-    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-        channels= wf.getnchannels(),
-        rate=wf.getframerate(),
-        output=True)
-    data = wf.readframes(chunk)
-    while len(data) > 0:
-        stream.write(data)
-        data = wf.readframes(chunk)
-
-    stream.stop_stream()
-    stream.close()
-
-    p.terminate()
+#     wf = wave.open(fileName,'rb')
+#     p = pyaudio.PyAudio()
+#     stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+#         channels= wf.getnchannels(),
+#         rate=wf.getframerate(),
+#         output=True)
+#     data = wf.readframes(chunk)
+#     while len(data) > 0:
+#         stream.write(data)
+#         data = wf.readframes(chunk)
+# 
+#     stream.stop_stream()
+#     stream.close()
+# 
+#     p.terminate()
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
@@ -145,3 +148,5 @@ def autoTune(freq, time):
 #     if clickE.implement == False:
 #         break
 #curl -sS https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash
+
+autoTune(500, 1)

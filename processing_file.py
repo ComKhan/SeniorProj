@@ -11,7 +11,7 @@ chans = 1
 samp_rate = 48000
 chunk = 4096
 record_secs = 5
-dev_index = 1  # this is the device index (usb device specific port) connection in hardware VARIES
+dev_index = 0  # this is the device index (usb device specific port) connection in hardware VARIES
 # wav_output_filename = 'test6.wav'
 audio = pyaudio.PyAudio()
 
