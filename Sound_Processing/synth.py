@@ -47,7 +47,7 @@ def setPer(Amplitude, tfreq, instrument_file, runtime, Fs):
     output = []
     length = len(y)
     while i < Fs*runtime:
-        output.append(y[(i*tfreq//110)%length])
+        output.append(Amplitude*y[(i*tfreq//110)%length])
         i += 1
 
     output = np.array(output)
