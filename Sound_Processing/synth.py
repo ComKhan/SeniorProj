@@ -56,10 +56,14 @@ def setPer(Amplitude, tfreq, instrument_file, time):
 
     write('setPer.wav', Fs, output)
     Fs, y = read('setPer.wav')
+    
+    wavFuncs.playwav('setPer.wav')
+    
     plotWaveform(y, time, Fs)
-    #wavFuncs.playwav('setPer.wav')
+    
     sd.play(y, Fs)
     sd.wait()
+    
     return Fs, y
 
 
