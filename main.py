@@ -24,7 +24,7 @@ import wave
 # Import local py files
 import rootFSM as fsm
 import btns
-
+import subprocess
 '''
 global variables
 
@@ -54,9 +54,16 @@ current = currProps()
 inFSM = True # stays in FSM while true
 #global btn1, btn2, btn3, btn4, btn5, btn6, btn7
 
+# add to init
+
+
 if __name__ == "__main__":
     mainFSM = fsm.Char() # create an instance of the FSM
     
+    vol = 50
+    cmd = ["amixer", "sset", "Master", "{}%".format(vol)]
+    subprocess.Popen(cmd)
+
     # add states instances
     mainFSM.FSM.states["InitS"] = fsm.InitS() #instance of Set state stored within state dictionary inside FSM
     mainFSM.FSM.states["WaitS"] = fsm.WaitS()
@@ -81,7 +88,7 @@ if __name__ == "__main__":
     
     #set initial state
     mainFSM.FSM.SetState("InitS")
-    
+    btns.clickVol.index = 5
     print("enter main now")
     while inFSM:
         mainFSM.FSM.Go()
@@ -95,48 +102,69 @@ if __name__ == "__main__":
             if ((testName == "InitS") & (mainFSM.FSM.lcd == True)):
                 lcd.write_lcd("Click any button\n","to start")
                 mainFSM.lcd = False
-            if ((testName == "WaitS") & mainFSM.FSM.lcd):
+            if ((testName == "WaitS") & (mainFSM.FSM.lcd == True)):
                 lcd.write_lcd("Settings     Yes\n","A  B  C  D  E No")
                 mainFSM.lcd = False
             if ((testName == "RecordS") & mainFSM.FSM.lcd):
-                lcd.write_lcd("Click any button\n","record")
+                lcd.write_lcd("Recording. Press \n","C  to stop.")
                 mainFSM.lcd = False
-            
+            if ((testName == "SetVolS") & mainFSM.FSM.lcd):
+                lcd.write_lcd("Volume\n", btns.clickVol.val)
+                mainFSM.lcd = False
+            if ((testName == "InstS") & mainFSM.FSM.lcd):
+                lcd.write_lcd("Instrument\n", btns.clickE.val)
+                mainFSM.lcd = False              
+            if ((testName == "FilterS") & mainFSM.FSM.lcd):
+                lcd.write_lcd("Filter mode: \n", btns.clickD.val)
+                mainFSM.lcd = False
+            if ((testName == "OutputS") & mainFSM.FSM.lcd):
+                lcd.write_lcd("Output method: \n", btns.clickF.val)
+                mainFSM.lcd = False
+            if ((testName == "StoreS") & mainFSM.FSM.lcd):
+                lcd.write_lcd("Play file?   Yes \n","             No")
+                mainFSM.lcd = False
+            if ((testName == "PlayS") & mainFSM.FSM.lcd):
+                lcd.write_lcd("Play file    Yes \n","again?        No")
+                mainFSM.lcd = False
+
             
             if (testName == "WaitS") | (testName == "InitS"):
-                if btns.clickA.implement == False: # set up for each button
-                    mainFSM.FSM.Transition("toFilterS")
+                if btns.clickVol.implement == False: # set up for each button
+                    mainFSM.FSM.Transition("toSetVolS")
+                    print(btns.clickVol.val)
                     testTrans = mainFSM.FSM.trans
-                    btns.clickA.implement = True
+                    btns.clickVol.implement = True
 
-                if btns.clickB.implement == False: # set up for each button
-                    mainFSM.FSM.Transition("toInstS")
+                if btns.clickVol.implement == False: # set up for each button
+                    mainFSM.FSM.Transition("toSetVolS")
+                    print(btns.clickVol.val)
                     testTrans = mainFSM.FSM.trans
-                    btns.clickB.implement = True
+                    btns.clickVol.implement = True
 
                 if btns.clickC.implement == False: # set up for each button
-                    #mainFSM.FSM.Transition("toInitS")
+                    mainFSM.FSM.Transition("toRecordS")
                     #testTrans = mainFSM.FSM.trans
-                    print("no use for btn in this state")
+                    #print("no use for btn in this state")
                     btns.clickC.implement = True
 
                 if btns.clickD.implement == False: # set up for each button
-                    mainFSM.FSM.Transition("toOutputS")
+                    mainFSM.FSM.Transition("toFilterS")
                     testTrans = mainFSM.FSM.trans
                     btns.clickD.implement = True
 
                 if btns.clickE.implement == False: # set up for each button
-                    mainFSM.FSM.Transition("toRecordS")
+                    mainFSM.FSM.Transition("toInstS")
                     testTrans = mainFSM.FSM.trans
                     btns.clickD.implement = True
 
                 if btns.clickF.implement == False: # set up for each button
-                    mainFSM.FSM.Transition("toSetVolS")
+                    mainFSM.FSM.Transition("toOutputS")
                     testTrans = mainFSM.FSM.trans
                     btns.clickF.implement = True
 
                 if btns.clickG.implement == False: # set up for each button
-                    mainFSM.FSM.Transition("toQuickVolS")
+                    #mainFSM.FSM.Transition("toQuickVolS")
+                    print("no use for btn in this state")
                     testTrans = mainFSM.FSM.trans
                     btns.clickG.implement = True
 
@@ -146,36 +174,37 @@ if __name__ == "__main__":
                 testTrans = mainFSM.FSM.trans
                 
             if (testName == "RecordS"): # stuck on: button doesn't reset to false
-                if btns.clickE.implement == False:
+                if btns.clickC.implement == False:
                     mainFSM.FSM.Transition("toStoreS")
                     testTrans = mainFSM.FSM.trans
-                    btns.clickE.implement = True
+                    btns.clickC.implement = True
 
             if (testName == "StoreS"):
-                if btns.clickC.implement == False:
+                if btns.clickG.implement == False:
                     mainFSM.FSM.Transition("toPlayS")
                     testTrans = mainFSM.FSM.trans
-                    btns.clickC.implement = True
+                    btns.clickG.implement = True
 
-                if btns.clickD.implement == False:
+                if btns.clickF.implement == False:
                     mainFSM.FSM.Transition("toWaitS")
                     testTrans = mainFSM.FSM.trans
-                    btns.clickD.implement = True
+                    btns.clickF.implement = True
 
             if (testName == "PlayS"):
-                if btns.clickC.implement == False:
+                if btns.clickG.implement == False:
                     mainFSM.FSM.Transition("toPlayS")
                     testTrans = mainFSM.FSM.trans
-                    btns.clickC.implement = True
+                    btns.clickG.implement = True
 
-                if btns.clickD.implement == False:
+                if btns.clickF.implement == False:
                     mainFSM.FSM.Transition("toWaitS")
                     testTrans = mainFSM.FSM.trans
-                    btns.clickD.implement = True
+                    btns.clickF.implement = True
 
         else: # implement transition and run
             #print("edge case FAIL")
             mainFSM.FSM.Go()
+            print(btns.clickVol.val)
             mainFSM.FSM.Transition(mainFSM.FSM.transName)
             
 
