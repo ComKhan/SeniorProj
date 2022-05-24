@@ -38,18 +38,22 @@ def plotWaveform(sound, time = 0.05):
     plt.close()
 
 
-def setPer(Amplitude, tfreq, instrument_file, runtime):
+def interpolate(first, second, dist):
+    return first + (dist*(second-first))
+
+def setPer(Amplitude, tfreq, instrument_file, runtime, Fs):
     FS, y = read(instrument_file)
-    print(len(y))
-    afreq = FS/len(y)
-    print(tfreq/afreq)
-    y = y[0:int(afreq/tfreq):len(y)]
-    print(len(y))
-    y = [num*Amplitude for num in y]
-    print(len(y))
-    y = runtime/(len(y)/FS) * y
-    sd.play(y, FS)
+    i = 0
+    output = []
+    length = len(y)
+    while i < Fs*runtime:
+        output.append(y[(i*tfreq//110)%length])
+        i += 1
+
+    output = np.array(output)
+
+    sd.play(output, FS)
     return FS, y
 
 
-setPer(1, 100, "periodfiles/pianoPer.wav", 1)
+setPer(1, 200, "periodfiles/a2Piano.wav", 1, 48000)
