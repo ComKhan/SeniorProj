@@ -60,7 +60,7 @@ def write_lcd(line1, line2):
     lcd.message = lcd_line_1 + lcd_line_2
 
 
-# wipe LCD screen before we start
+''' wipe LCD screen before we start
 lcd.clear()
 
 # before we start the main loop - detect active network device and ip address
@@ -81,3 +81,4 @@ while True:
 
     sleep(2)
 
+'''

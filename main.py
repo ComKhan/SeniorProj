@@ -10,6 +10,7 @@ from gpiozero import Button
 
 from multiprocessing.pool import INIT
 #import buttons
+import lcd
 import time
 
 '''
@@ -90,6 +91,18 @@ if __name__ == "__main__":
         if testTrans == None: # run and check for transitions
             #print("trans == None")
             #mainFSM.FSM.Go()
+            # LCD Message Updates
+            if ((testName == "InitS") & (mainFSM.FSM.lcd == True)):
+                lcd.write_lcd("Click any button\n","to start")
+                mainFSM.lcd = False
+            if ((testName == "WaitS") & mainFSM.FSM.lcd):
+                lcd.write_lcd("Settings     Yes\n","A  B  C  D  E No")
+                mainFSM.lcd = False
+            if ((testName == "RecordS") & mainFSM.FSM.lcd):
+                lcd.write_lcd("Click any button\n","record")
+                mainFSM.lcd = False
+            
+            
             if (testName == "WaitS") | (testName == "InitS"):
                 if btns.clickA.implement == False: # set up for each button
                     mainFSM.FSM.Transition("toFilterS")

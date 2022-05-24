@@ -9,7 +9,7 @@ import btns
 import RPi.GPIO as GPIO
 from gpiozero import Button
 import main
-#import lcd
+import lcd
 
 State = type("States", (object,), {})
 btn1 = Button(16) #Filter, Yes
@@ -28,8 +28,8 @@ class InitS(State):
 
     def Go(self):
         #btns.initialize()
-        print("go InitS")
-        time.sleep(2)
+        #print("go InitS")
+        #time.sleep(2)
         btn1.when_pressed = btns.clickA.clicked
         btn2.when_pressed = btns.clickB.clicked
         btn3.when_pressed = btns.clickC.clicked
@@ -37,6 +37,8 @@ class InitS(State):
         btn5.when_pressed = btns.clickE.clicked
         btn6.when_pressed = btns.clickF.clicked
         btn7.when_pressed = btns.clickG.clicked
+        
+        #lcd.write_lcd("Click any button\n","to start")
         '''if btn1.is_pressed: # wait  for button clicks within states
             btns.clickA.clicked()
             print("state A clicked button")'''
@@ -55,14 +57,15 @@ class WaitS(State):
 
     def Go(self):
         #print("go WaitS")
+        #lcd.write_lcd("Settings     Yes\n","A  B  C  D  E  No")
         btn1.when_pressed = btns.clickA.clicked
         btn2.when_pressed = btns.clickB.clicked
         btn3.when_pressed = btns.clickC.clicked
+        
         btn4.when_pressed = btns.clickD.clicked
         btn5.when_pressed = btns.clickE.clicked
         btn6.when_pressed = btns.clickF.clicked
         btn7.when_pressed = btns.clickG.clicked
-
         # Testing code: Remove for full implementation
         #mainFSM.FSM.Transition("toInitS")
         #mainFSM.FSM.curStateName = "InitS"
@@ -78,7 +81,7 @@ class RecordS(State):
 
     def Go(self):
         btn5.when_pressed = btns.clickE.clicked
-
+        #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         pass
 
 class StoreS(State):
@@ -88,6 +91,8 @@ class StoreS(State):
         pass
 
     def Go(self):
+        # Perform storing functions first / use flag to only do once
+        #lcd.write_lcd("Play file?   Yes\n","            No")
         btn3.when_pressed = btns.clickC.clicked
         btn4.when_pressed = btns.clickD.clicked
         pass
@@ -99,6 +104,7 @@ class PlayS(State):
         pass
 
     def Go(self):
+        #lcd.write_lcd("Playing file")
         btn3.when_pressed = btns.clickC.clicked
         btn4.when_pressed = btns.clickD.clicked
         pass
@@ -180,6 +186,7 @@ class SimpleFSM(object):
         self.curStateName = None
         self.trans = None       # current transition
         self.transName = None
+        self.lcd = True
         print("Init simpFSM")
 
     def SetState(self, stateName): # look at string passed within dictionary
@@ -190,6 +197,7 @@ class SimpleFSM(object):
     def Transition(self, transName):  
         self.trans = self.transitions[transName]
         self.transName = transName
+        self.lcd = False
         print("trans simpFSM")
 
     def Go(self):
@@ -241,7 +249,7 @@ if __name__ == "__main__":
 
 
 '''
-# method in video, using Char method
+'''# method in video, using Char method
 inFSM = True # stays in FSM while true
 
 if __name__ == "__main__":
@@ -310,8 +318,8 @@ if __name__ == "__main__":
             pass
 
         mainFSM.FSM.Go()
-        pass
-    '''
+        pass'''
+'''
     for i in range(20):
         timeInterval = 1
         
@@ -325,4 +333,4 @@ if __name__ == "__main__":
 
         light.FSM.Go()
 
-    '''
+'''
