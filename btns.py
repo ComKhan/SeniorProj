@@ -1,22 +1,21 @@
 # Updates variables and settings upon a button click
 # Button Setup:
-# Btn6 F - Vol Down     Btn7 G - Vol Up
+# Btn6 F - Yes     Btn7 G - No/Output Mode
 # Btn1 A    Btn2 B  Btn3 C  Btn4 D  Btn5 E
-# FilterMD  Inst            OutMd   Record 
-#                   Yes     No       
+# VolDwn    VolUp   Record  Filter  Inst 
 
 import array as arr
 from fcntl import F_SEAL_SEAL
 import string
 import RPi.GPIO as GPIO
 from gpiozero import Button
-
+import subprocess
 
 
 # dictionaries to be used as btnClk(clicks) input
 recordSet = ["STOP", "START"] # when initialized it begins at STOP, only on next click it STARTS
 instSet = ["INSTA", "INSTB", "INSTC"] # cycles through instruments, correspond to library
-volSet = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # make separate function that stops at max and min instead of looping around
+volSet = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100] # make separate function that stops at max and min instead of looping around
 filterSet = ["LIVEMD", "AUTOTUNEMD"]
 outputSet = ["SJACK", "LJACK", "MIDI", "NONE"]
 ynSet = ["Yes", "No"]
@@ -50,16 +49,39 @@ class btnClk: # need two -- reset index upon click and store index
         print("Button has been clicked -- " + self.name + str(self.index))
         pass
 
+    def volUpClicked(self):
+        self.implement = False
+        if (self.index < len(self.clicks) - 1):
+            self.index +=1
+        else:
+            pass #remove if vol control works without this
+        self.val = self.clicks[self.index]
+        vol = self.val
+        cmd = ["amixer", "sset", "Master", "{}%".format(vol)]
+        subprocess.Popen(cmd)
 
+    def volDwnClicked(self):
+        self.implement = False
+        if (self.index >= 1):
+            self.index -=1
+        else:
+            pass #remove if vol control works without this
+        self.val = self.clicks[self.index]
+        vol = self.val
+        cmd = ["amixer", "sset", "Master", "{}%".format(vol)]
+        subprocess.Popen(cmd)
+        
 
 ##=======================================================================
 # button implementation
 #recordBtn = btnClk(recordSet, "Record Button")
-clickA = btnClk(filterSet, "A")
-clickB = btnClk(instSet, "B")
-clickC = btnClk(ynSet, "C")
-clickD = btnClk(outputSet, "D")
-clickE = btnClk(recordSet, "E")
-clickF = btnClk(volSet, "F") #create function for vol down clicked
-clickG = btnClk(volSet, "G") 
+clickA = btnClk(volSet, "A")
+clickB = btnClk(volSet, "B")
+clickC = btnClk(recordSet, "C")
+clickD = btnClk(filterSet, "D")
+clickE = btnClk(instSet, "E")
+clickF = btnClk(ynSet, "F") #create function for vol down clicked
+clickG = btnClk(ynSet, "G")
+
+clickVol = btnClk(volSet, "Vol")
 #global btn1, btn2, btn3, btn4, btn5, btn6, btn7
