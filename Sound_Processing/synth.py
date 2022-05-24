@@ -52,18 +52,18 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     while i < Fs*time:
         output.append(Amplitude*interpolate(y[(i*tfreq//110) % (length-1)],
                                             y[((i*tfreq//110) % (length-1))+1],
-                                            (i*tfreq//110)%1))
+                                            (i*tfreq//110) % 1))
         i += 1
 
     output = np.array(output)
 
-    print(output)
     write('setPer.wav', Fs, output)
     Fs, y = read('setPer.wav')
-    sd.play(y, Fs)
-    sd.wait()
     plotWaveform(y, time, Fs)
+    wavFuncs.playwav('setPer.wav')
+    sd.play(y,Fs)
+    sd.wait()
     return Fs, y
 
 
-setPer(1, 30, "periodfiles/a2Piano.wav", 1)
+setPer(1, 200, "periodfiles/a2Piano.wav", 1)

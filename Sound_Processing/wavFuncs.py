@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 from scipy.io.wavfile import read, write
 from scipy.fft import fft, fftfreq
 import numpy as np
+import pyaudio
+import wave
 import time as ti
 import soundfile as sf
 
@@ -186,6 +188,22 @@ def plotfft(sound, time=3, Fs=48000):
     write('FFT.wav', Fs, y)
     plt.show()
 
+def playwav(fileName):
+    chunk = 4096
+    wf = wave.open(fileName,'rb')
+    p1 = pyaudio.PyAudio()
+    stream1 = p1.open(format=p1.get_format_from_width(wf.getsampwidth()),
+        channels= wf.getnchannels(),
+        rate=wf.getframerate(),
+        output=True)
+    data = wf.readframes(chunk)
+    while len(data) > 0:
+        stream1.write(data)
+        data = wf.readframes(chunk)
+    stream1.stop_stream()
+    stream1.close()
+    wf.close()
+    p1.terminate()
 
 #plotfft('hps.wav')
 #tim = .05
