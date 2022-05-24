@@ -10,6 +10,7 @@ import RPi.GPIO as GPIO
 from gpiozero import Button
 import main
 import lcd
+import subprocess
 
 State = type("States", (object,), {})
 btn1 = Button(16) #Filter, Yes
@@ -30,13 +31,13 @@ class InitS(State):
         #btns.initialize()
         #print("go InitS")
         #time.sleep(2)
-        btn1.when_pressed = btns.clickA.clicked
-        btn2.when_pressed = btns.clickB.clicked
+        btn1.when_pressed = btns.clickVol.volDwnClicked
+        btn2.when_pressed = btns.clickVol.volUpClicked
         btn3.when_pressed = btns.clickC.clicked
         btn4.when_pressed = btns.clickD.clicked
         btn5.when_pressed = btns.clickE.clicked
         btn6.when_pressed = btns.clickF.clicked
-        btn7.when_pressed = btns.clickG.clicked
+        #btn7.when_pressed = btns.clickG.clicked
         
         #lcd.write_lcd("Click any button\n","to start")
         '''if btn1.is_pressed: # wait  for button clicks within states
@@ -58,14 +59,14 @@ class WaitS(State):
     def Go(self):
         #print("go WaitS")
         #lcd.write_lcd("Settings     Yes\n","A  B  C  D  E  No")
-        btn1.when_pressed = btns.clickA.clicked
-        btn2.when_pressed = btns.clickB.clicked
+        btn1.when_pressed = btns.clickVol.volDwnClicked
+        btn2.when_pressed = btns.clickVol.volUpClicked
         btn3.when_pressed = btns.clickC.clicked
         
         btn4.when_pressed = btns.clickD.clicked
         btn5.when_pressed = btns.clickE.clicked
         btn6.when_pressed = btns.clickF.clicked
-        btn7.when_pressed = btns.clickG.clicked
+        #btn7.when_pressed = btns.clickG.clicked # no function to increment in wait, implement flag may get messed up for btn if left in
         # Testing code: Remove for full implementation
         #mainFSM.FSM.Transition("toInitS")
         #mainFSM.FSM.curStateName = "InitS"
@@ -80,7 +81,9 @@ class RecordS(State):
         pass
 
     def Go(self):
-        btn5.when_pressed = btns.clickE.clicked
+        btn1.when_pressed = btns.clickVol.volDwnClicked
+        btn2.when_pressed = btns.clickVol.volUpClicked
+        btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         pass
 
@@ -93,8 +96,8 @@ class StoreS(State):
     def Go(self):
         # Perform storing functions first / use flag to only do once
         #lcd.write_lcd("Play file?   Yes\n","            No")
-        btn3.when_pressed = btns.clickC.clicked
-        btn4.when_pressed = btns.clickD.clicked
+        btn6.when_pressed = btns.clickF.clicked
+        btn7.when_pressed = btns.clickG.clicked
         pass
 
 class PlayS(State):
@@ -105,8 +108,9 @@ class PlayS(State):
 
     def Go(self):
         #lcd.write_lcd("Playing file")
-        btn3.when_pressed = btns.clickC.clicked
-        btn4.when_pressed = btns.clickD.clicked
+        btn1.when_pressed = btns.clickVol.volDwnClicked
+        btn2.when_pressed = btns.clickVol.volUpClicked
+
         pass
 
 class QuickVolS(State):
@@ -116,7 +120,16 @@ class QuickVolS(State):
         pass
 
     def Go(self):
+        btn1.when_pressed = btns.clickVol.volDwnClicked
+        btn2.when_pressed = btns.clickVol.volUpClicked
+        
         print("go QuickVolS")
+
+        '''if (btns.clickVol.implement == False): # works from btns for now, wasn't working in fsm
+            vol = btns.clickVol.val
+            cmd = ["amixer", "sset", "Master", "{}%".format(vol)]
+            subprocess.Popen(cmd)
+            btns.clickVol.implement = True'''
         pass
 
 class SetVolS(State):
@@ -127,6 +140,15 @@ class SetVolS(State):
 
     def Go(self):
         print("go SetVolS")
+        btn1.when_pressed = btns.clickVol.volDwnClicked
+        btn2.when_pressed = btns.clickVol.volUpClicked
+
+        '''if (btns.clickVol.implement == False): # works from btns for now, wasn't working in fsm
+            vol = btns.clickVol.val
+            cmd = ["amixer", "sset", "Master", "{}%".format(vol)]
+            subprocess.Popen(cmd)
+            btns.clickVol.implement = True'''
+        pass
         pass
 
 class InstS(State):
@@ -187,6 +209,7 @@ class SimpleFSM(object):
         self.trans = None       # current transition
         self.transName = None
         self.lcd = True
+        self.lcdShort = True # short 2 sec flag for settings messages
         print("Init simpFSM")
 
     def SetState(self, stateName): # look at string passed within dictionary
@@ -206,6 +229,8 @@ class SimpleFSM(object):
             self.SetState(self.trans.toState) # set to transitioned state
             self.trans = None       # reset transition to None
             self.transName = None
+            self.lcd = True
+            self.lcdShort = True
             print("in state " + self.curStateName)
         self.curState.Go()     # execute current state
         #print("go simpfsm")
