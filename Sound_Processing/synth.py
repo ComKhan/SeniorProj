@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import sounddevice as sd
 import numpy as np
 import math
-import time
+from time import sleep
 import wavFuncs
 
 def plotWaveform(sound, time = 0.05, Fs = 48000):
@@ -60,10 +60,9 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     write('setPer.wav', Fs, output)
     Fs, y = read('setPer.wav')
     plotWaveform(y, time, Fs)
-    wavFuncs.playwav('setPer.wav')
-    sd.play(y,Fs)
-    sd.wait()
+    #wavFuncs.playwav('setPer.wav')
+    sd.play()
     return Fs, y
 
 
-setPer(1, 200, "periodfiles/a2Piano.wav", 1)
+setPer(1, 400, "periodfiles/a2Piano.wav", 1)
