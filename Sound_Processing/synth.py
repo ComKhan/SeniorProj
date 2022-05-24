@@ -46,9 +46,6 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     i = 0
     output = []
     length = len(y)
-    sd.play(y, Fs)
-    sd.wait()
-    plotWaveform(y, length/Fs, Fs)
     while i < Fs*time:
         output.append(Amplitude*interpolate(y[(i*tfreq//110) % (length-1)],
                                             y[((i*tfreq//110) % (length-1))+1],
@@ -61,7 +58,8 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     Fs, y = read('setPer.wav')
     plotWaveform(y, time, Fs)
     #wavFuncs.playwav('setPer.wav')
-    sd.play()
+    sd.play(y, Fs)
+    sd.wait()
     return Fs, y
 
 
