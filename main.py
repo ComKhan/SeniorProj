@@ -44,6 +44,15 @@ class currProps(object): # stores current values for FSM
 
 current = currProps()
 
+
+def signal_handler(sig, frame):
+    GPIO.cleanup()
+    sys.exit(0)
+
+def button_pressed_callback(channel):
+    print("Button pressed!")
+    btns.clickC.clicked()
+    #button_press3.value = 1
 ##================================================================================
 
 #recordVal = buttons.btnClk() # instance of settings for the record button
@@ -60,10 +69,16 @@ inFSM = True # stays in FSM while true
 if __name__ == "__main__":
     mainFSM = fsm.Char() # create an instance of the FSM
     
+    # GPIO setup for button C
+    BUTTON_GPIO = 5
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(BUTTON_GPIO, GPIO.FALLING, 
+        callback=button_pressed_callback, bouncetime=300)
+
     vol = 50
     cmd = ["amixer", "sset", "Master", "{}%".format(vol)]
     subprocess.Popen(cmd)
-
     # add states instances
     mainFSM.FSM.states["InitS"] = fsm.InitS() #instance of Set state stored within state dictionary inside FSM
     mainFSM.FSM.states["WaitS"] = fsm.WaitS()
@@ -155,7 +170,7 @@ if __name__ == "__main__":
                 if btns.clickE.implement == False: # set up for each button
                     mainFSM.FSM.Transition("toInstS")
                     testTrans = mainFSM.FSM.trans
-                    btns.clickD.implement = True
+                    btns.clickE.implement = True
 
                 if btns.clickF.implement == False: # set up for each button
                     mainFSM.FSM.Transition("toOutputS")

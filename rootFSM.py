@@ -33,7 +33,7 @@ class InitS(State):
         #time.sleep(2)
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
-        btn3.when_pressed = btns.clickC.clicked
+        #btn3.when_pressed = btns.clickC.clicked
         btn4.when_pressed = btns.clickD.clicked
         btn5.when_pressed = btns.clickE.clicked
         btn6.when_pressed = btns.clickF.clicked
@@ -61,7 +61,7 @@ class WaitS(State):
         #lcd.write_lcd("Settings     Yes\n","A  B  C  D  E  No")
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
-        btn3.when_pressed = btns.clickC.clicked
+        #btn3.when_pressed = btns.clickC.clicked
         
         btn4.when_pressed = btns.clickD.clicked
         btn5.when_pressed = btns.clickE.clicked
@@ -83,7 +83,7 @@ class RecordS(State):
     def Go(self):
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
-        btn3.when_pressed = btns.clickC.clicked
+        #btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         pass
 
