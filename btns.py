@@ -10,7 +10,7 @@ import string
 import RPi.GPIO as GPIO
 from gpiozero import Button
 import subprocess
-
+import test_mult
 
 # dictionaries to be used as btnClk(clicks) input
 recordSet = ["STOP", "START"] # when initialized it begins at STOP, only on next click it STARTS
@@ -45,7 +45,7 @@ class btnClk: # need two -- reset index upon click and store index
         else:
             self.index = 0
         self.val = self.clicks[self.index]
-        
+        test_mult.button_press.value = 1
         print("Button has been clicked -- " + self.name + str(self.index))
         pass
 

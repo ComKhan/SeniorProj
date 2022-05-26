@@ -15,7 +15,7 @@ import subprocess
 State = type("States", (object,), {})
 btn1 = Button(16) #Filter, Yes
 btn2 = Button(6) # Inst
-btn3 = Button(5) # No
+#btn3 = Button(5) # No
 btn4 = Button(0) # Output
 btn5 = Button(4) # Record
 btn6 = Button(3) # Vol Dwn
