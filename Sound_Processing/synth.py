@@ -5,6 +5,7 @@ import numpy as np
 import math
 import wavFuncs
 
+#te
 def plotWaveform(sound, time = 0.05, Fs = 48000):
     if type(sound) == str:
         Fs, y = read(sound)
