@@ -17,7 +17,7 @@ State = type("States", (object,), {})
 btn1 = Button(16) #Filter, Yes
 btn2 = Button(6) # Inst
 #btn3 = Button(5) # No
-#btn4 = Button(0) # Output
+btn4 = Button(0) # Output
 btn5 = Button(4) # Record
 #btn6 = Button(3) # Vol Dwn
 #btn7 = Button(2) # Vol Up
@@ -37,7 +37,7 @@ class InitS(State):
         #btn3.when_pressed = btns.clickC.clicked
         btn4.when_pressed = btns.clickD.clicked
         btn5.when_pressed = btns.clickE.clicked
-        btn6.when_pressed = btns.clickF.clicked
+        #btn6.when_pressed = btns.clickF.clicked
         #btn7.when_pressed = btns.clickG.clicked
         
         #lcd.write_lcd("Click any button\n","to start")
@@ -66,7 +66,7 @@ class WaitS(State):
         
         btn4.when_pressed = btns.clickD.clicked
         btn5.when_pressed = btns.clickE.clicked
-        btn6.when_pressed = btns.clickF.clicked
+        #btn6.when_pressed = btns.clickF.clicked
         #btn7.when_pressed = btns.clickG.clicked # no function to increment in wait, implement flag may get messed up for btn if left in
         # Testing code: Remove for full implementation
         #mainFSM.FSM.Transition("toInitS")
@@ -100,8 +100,8 @@ class StoreS(State):
     def Go(self):
         # Perform storing functions first / use flag to only do once
         #lcd.write_lcd("Play file?   Yes\n","            No")
-        btn6.when_pressed = btns.clickF.clicked
-        btn7.when_pressed = btns.clickG.clicked
+        #btn6.when_pressed = btns.clickF.clicked
+        #btn7.when_pressed = btns.clickG.clicked
         pass
 
 class PlayS(State):
@@ -251,115 +251,3 @@ class Char(object):
 
 
 ##============================================================================
-'''
-if __name__ == "__main__":
-    light = SimpleFSM()
-
-    light.states["Set"] = Set() #instance of Set state stored within state dictionary inside FSM
-    light.states["Off"] = Clicked()
-    light.transitions["toOn"] = Transition("Set") # create instance of those transitions and store them within trans dictionary
-    light.transitions["toOff"] = Transition("Off")
-
-    #set initial state
-    light.SetState("Set")
-
-    for i in range(20):
-        timeInterval = 1
-        
-        if (randint(0,2)):
-            if(light.Set):
-                light.Transition("toOff")
-                #light.Set = False
-            else:
-                light.Transition("toOn")
-                #light.Set = True
-
-        light.Go()
-
-
-'''
-'''# method in video, using Char method
-inFSM = True # stays in FSM while true
-
-if __name__ == "__main__":
-    mainFSM = Char() # create an instance of the FSM
-    
-    # add states instances
-    mainFSM.FSM.states["InitS"] = InitS() #instance of Set state stored within state dictionary inside FSM
-    mainFSM.FSM.states["WaitS"] = WaitS()
-    mainFSM.FSM.transitions["toWaitS"] = Transition("WaitS") # create instance of those transitions and store them within trans dictionary
-    mainFSM.FSM.transitions["toInitS"] = Transition("InitS")
-    
-    #set initial state
-    mainFSM.FSM.SetState("InitS")
-
-    print("enter main now")
-    while inFSM:
-        matchName = mainFSM.FSM.curStateName
-        if matchName == "InitS":
-            #lcd.write_lcd("Synth Start    F", "A B C D E      G") # add when import lcd
-            print("Synth Start    F")
-            mainFSM.FSM.Transition("toWaitS")
-            time.sleep(5)
-            pass
-
-        elif matchName == "WaitS":
-            mainFSM.FSM.Transition("toInitS")
-            mainFSM.FSM.curStateName = "InitS"
-            print("State 2")
-            time.sleep(5)
-            pass
-
-        elif matchName == "RecordS":
-
-            pass
-
-        elif matchName == "StoreS":
-
-            pass
-        
-        elif matchName == "PlayS":
-
-            pass
-
-        elif matchName == "QuickVol":
-
-            pass
-
-        elif matchName == "SetVolS":
-
-            pass
-            
-        elif matchName == "SetInstS":
-
-            pass
-
-        elif matchName == "SetFilterS":
-
-            pass
-
-        elif matchName == "SetOutS":
-
-            pass   
-
-        else:
-            print("edge case: FAIL")
-            pass
-
-        mainFSM.FSM.Go()
-        pass'''
-'''
-    for i in range(20):
-        timeInterval = 1
-        
-        if (randint(0,2)):
-            if(light.Set):
-                light.FSM.Transition("toOff")
-                light.Set = False
-            else:
-                light.FSM.Transition("toOn")
-                light.Set = True
-
-        light.FSM.Go()
-
-'''
