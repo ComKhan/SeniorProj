@@ -129,7 +129,7 @@ def demo(instr):
     filt_out, freq = process_data(p_array, chunk, samplerate)
     setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
 
-demo("harpsicord")
+demo("guitar")
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
