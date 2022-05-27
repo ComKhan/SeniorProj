@@ -10,8 +10,8 @@ import string
 import RPi.GPIO as GPIO
 from gpiozero import Button
 import subprocess
-import test_mult
-import main 
+#import test_mult
+#import main 
 
 # dictionaries to be used as btnClk(clicks) input
 recordSet = ["STOP", "START"] # when initialized it begins at STOP, only on next click it STARTS
