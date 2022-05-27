@@ -60,5 +60,3 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     wavFuncs.playwav('setPer.wav')
     
     return Fs, y
-
-setPer(1, 300, "periodfiles/a2Piano.wav", 1)

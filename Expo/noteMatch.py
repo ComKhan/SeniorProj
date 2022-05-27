@@ -97,8 +97,6 @@ def autotune(instr):
     p_array = list(p_array)
     filt_out, freq = process_data(p_array, chunk, samplerate)
     setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
-
-autotune("guitar")
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
