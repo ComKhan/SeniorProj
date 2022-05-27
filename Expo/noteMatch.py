@@ -89,38 +89,7 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     
     return Fs, y
 
-def autoTune(freq, time, instr):
-    chunk = 4096
-    # p_array, samplerate = sf.read(soundFile)
-    # p_array = list(p_array)
-
-    # filt_out,freq = process_data(p_array, chunk, samplerate)
-    fileName = matchnote(freq, instr)
-    
-    print(freq)
-#     playsound(fileName)
-    
-#     Fs, y = read(fileName)
-#     sd.play(y, Fs)
-#     sd.wait()
-#     
-    wf = wave.open(fileName,'rb')
-    p1 = pyaudio.PyAudio()
-    stream1 = p1.open(format=p1.get_format_from_width(wf.getsampwidth()),
-        channels= wf.getnchannels(),
-        rate=wf.getframerate(),
-        output=True)
-    data = wf.readframes(chunk)
-    while len(data) > 0:
-        stream1.write(data)
-        data = wf.readframes(chunk)
-
-    stream1.stop_stream()
-    stream1.close()
-
-    p1.terminate()
-
-def demo(instr):
+def autotune(instr):
     chunk = 4096
 
     wavFuncs.recording(1)
@@ -129,7 +98,7 @@ def demo(instr):
     filt_out, freq = process_data(p_array, chunk, samplerate)
     setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
 
-demo("harpsicord")
+autotune("guitar")
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
