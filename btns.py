@@ -46,7 +46,7 @@ class btnClk: # need two -- reset index upon click and store index
         else:
             self.index = 0
         self.val = self.clicks[self.index]
-        test_mult.button_press.value = 1
+        #test_mult.button_press.value = 1
         print("Button has been clicked -- " + self.name + str(self.index))
         pass
 

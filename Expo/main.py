@@ -45,14 +45,14 @@ class currProps(object): # stores current values for FSM
 current = currProps()
 
 
-def signal_handler(sig, frame):
+'''def signal_handler(sig, frame):
     GPIO.cleanup()
     sys.exit(0)
 
 def button_pressed_callback(channel):
     print("Button pressed!")
     btns.clickC.clicked()
-    #button_press3.value = 1
+    #button_press3.value = 1'''
 ##================================================================================
 
 #recordVal = buttons.btnClk() # instance of settings for the record button
@@ -71,14 +71,15 @@ if __name__ == "__main__":
     
     lcdLoad = True # only load message when new message needed
     lcdDelay = True # adds delay to lcd settings
-
-    # GPIO setup for button C
-    BUTTON_GPIO = 5
     count = 1
+    
+    # GPIO setup for button C
+    '''BUTTON_GPIO = 5
+    
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(BUTTON_GPIO, GPIO.FALLING, 
-        callback=button_pressed_callback, bouncetime=300)
+        callback=button_pressed_callback, bouncetime=300)'''
 
     vol = 50
     cmd = ["amixer", "sset", "Master", "{}%".format(vol)]
