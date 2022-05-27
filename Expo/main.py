@@ -141,12 +141,12 @@ if __name__ == "__main__":
                 mainFSM.lcd = False     
                 lcdDelay = False
                 lcdLoad = False         
-            '''if ((testName == "FilterS") & (lcdDelay == True) & (lcdLoad == True)):
+            if ((testName == "FilterS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Filter mode: \n", btns.clickD.val)
                 mainFSM.lcd = False
                 lcdDelay = False
                 lcdLoad = False
-            if ((testName == "OutputS") & (lcdDelay == True) & (lcdLoad == True)):
+            '''if ((testName == "OutputS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Output method: \n", btns.clickF.val)
                 mainFSM.lcd = False
                 lcdDelay = False
