@@ -88,8 +88,8 @@ class RecordS(State):
         #btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         wavFuncs.recording(1)
-        audio = noteMatch.autoTune('recording.wav', 0.1)
-        clickC.implement = True
+        audio = noteMatch.autoTune('Piano')
+        btns.clickC.implement = True
         pass
 
 class StoreS(State):
