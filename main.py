@@ -74,6 +74,7 @@ if __name__ == "__main__":
 
     # GPIO setup for button C
     BUTTON_GPIO = 5
+    count = 1
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(BUTTON_GPIO, GPIO.FALLING, 
@@ -117,39 +118,43 @@ if __name__ == "__main__":
             #print("trans == None")
             #mainFSM.FSM.Go()
             # LCD Message Updates
-            if ((testName == "InitS") & (lcdDelay == True)):
+            if ((testName == "InitS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Click any button\n","to start")
                 mainFSM.lcd = False
                 lcdDelay = False
-            if ((testName == "WaitS") & (lcdDelay == True)):
+            if ((testName == "WaitS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Settings     Yes\n","A  B  C  D E F/N")
                 mainFSM.lcd = False
                 lcdDelay = False
-            if ((testName == "RecordS") & (lcdDelay == True)):
+            if ((testName == "RecordS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Recording. Press \n","C  to stop.")
                 mainFSM.lcd = False
                 lcdDelay = False
-            if ((testName == "SetVolS") & (lcdDelay == True)):
+            if ((testName == "SetVolS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Volume\n", btns.clickVol.val)
                 mainFSM.lcd = False
                 lcdDelay = False
-            if ((testName == "InstS") & (lcdDelay == True)):
+                lcdLoad = False
+            if ((testName == "InstS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Instrument\n", btns.clickE.val)
                 mainFSM.lcd = False     
-                lcdDelay = False         
-            if ((testName == "FilterS") & (lcdDelay == True)):
+                lcdDelay = False
+                lcdLoad = False         
+            if ((testName == "FilterS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Filter mode: \n", btns.clickD.val)
                 mainFSM.lcd = False
                 lcdDelay = False
-            if ((testName == "OutputS") & (lcdDelay == True)):
+                lcdLoad = False
+            if ((testName == "OutputS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Output method: \n", btns.clickF.val)
                 mainFSM.lcd = False
                 lcdDelay = False
-            if ((testName == "StoreS") & (lcdDelay == True)):
+                lcdLoad = False
+            if ((testName == "StoreS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Play file?   Yes \n","             No")
                 mainFSM.lcd = False
                 lcdDelay = False
-            if ((testName == "PlayS") & (lcdDelay == True)):
+            if ((testName == "PlayS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Play file    Yes \n","again?        No")
                 mainFSM.lcd = False
                 lcdDelay = False
@@ -162,6 +167,7 @@ if __name__ == "__main__":
                     testTrans = mainFSM.FSM.trans
                     btns.clickVol.implement = True
                     lcdDelay = True
+                    
 
                 if btns.clickVol.implement == False: # set up for each button
                     mainFSM.FSM.Transition("toSetVolS")
@@ -240,6 +246,13 @@ if __name__ == "__main__":
                     testTrans = mainFSM.FSM.trans
                     btns.clickF.implement = True
                     lcdDelay = True
+
+            if (lcdLoad == False):
+                count += 1
+                if (count >= 500):
+                    lcdLoad = True
+                    count = 1
+
 
         else: # implement transition and run
             #print("edge case FAIL")
