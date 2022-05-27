@@ -17,9 +17,10 @@ def signal_handler(sig, frame):
 def button_pressed_callback(channel):
     print("Button pressed!")
     btns.clickC.clicked()
+    button_press.value = 1
     #button_press3.value = 1
     
-def process_1(button_press1):
+def process_1(button_press):
     i = 0
     print("running")
     '''fsm.btn5.when_pressed = btns.clickE.clicked
@@ -36,7 +37,7 @@ def process_1(button_press1):
             print("p1 click")
             btns.clickE.implement = True'''
 
-    while button_press1.value != 1:
+    while button_press.value != 1:
         if (i%200000 == 0):
             print(i)
             pass
@@ -52,11 +53,11 @@ def process_1(button_press1):
     print("done")
 
 
-def process_2(button_press2):
+def process_2(button_press):
     #print("p2 go")
     #fsm.btn5.when_pressed = btns.clickE.clicked
     if (btns.clickC.implement == False):
-        button_press2.value = 1
+        button_press.value = 1
         print("p1 click")
         btns.clickC.implement = True
 
@@ -64,7 +65,7 @@ def process_2(button_press2):
         #print("yes")
         #fsm.btn3.when_pressed = btns.clickC.clicked
         if (btns.clickC.implement == False):
-            button_press2.value = 1
+            button_press.value = 1
             print("p2 click")
             #btns.clickC.
             btns.clickC.implement = True
