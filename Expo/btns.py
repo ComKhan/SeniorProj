@@ -15,7 +15,7 @@ import subprocess
 
 # dictionaries to be used as btnClk(clicks) input
 recordSet = ["STOP", "START"] # when initialized it begins at STOP, only on next click it STARTS
-instSet = ["INSTA", "INSTB", "INSTC"] # cycles through instruments, correspond to library
+instSet = ["piano", "harpsicord", "guitar"] # cycles through instruments, correspond to library
 volSet = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100] # make separate function that stops at max and min instead of looping around
 filterSet = ["LIVEMD", "AUTOTUNEMD"]
 outputSet = ["SJACK", "LJACK", "MIDI", "NONE"]
