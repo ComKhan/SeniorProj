@@ -227,11 +227,11 @@ class SimpleFSM(object):
         if(self.trans):             # if there's a transition stored within the trans
             self.trans.Go()    # execute that transition
             self.SetState(self.trans.toState) # set to transitioned state
-            self.trans = None       # reset transition to None
             self.transName = None
             self.lcd = True
             self.lcdShort = True
             print("in state " + self.curStateName)
+            self.trans = None       # reset transition to None
         self.curState.Go()     # execute current state
         #print("go simpfsm")
 

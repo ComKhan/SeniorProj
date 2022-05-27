@@ -11,6 +11,7 @@ import RPi.GPIO as GPIO
 from gpiozero import Button
 import subprocess
 import test_mult
+import main 
 
 # dictionaries to be used as btnClk(clicks) input
 recordSet = ["STOP", "START"] # when initialized it begins at STOP, only on next click it STARTS
@@ -80,7 +81,7 @@ clickB = btnClk(volSet, "B")
 clickC = btnClk(recordSet, "C")
 clickD = btnClk(filterSet, "D")
 clickE = btnClk(instSet, "E")
-clickF = btnClk(ynSet, "F") #create function for vol down clicked
+clickF = btnClk(outputSet, "F") #create function for vol down clicked
 clickG = btnClk(ynSet, "G")
 
 clickVol = btnClk(volSet, "Vol")
