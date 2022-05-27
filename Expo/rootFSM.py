@@ -12,7 +12,8 @@ import main
 import lcd
 import subprocess
 import noteMatch
-
+import wavFuncs
+import noteMatch
 State = type("States", (object,), {})
 btn1 = Button(16) #Filter, Yes
 btn2 = Button(6) # Inst
@@ -87,7 +88,7 @@ class RecordS(State):
         #btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         wavFuncs.recording(1)
-        audio = autoTune('recording.wav', 0.1)
+        audio = noteMatch.autoTune('recording.wav', 0.1)
         clickC.implement = True
         pass
 
