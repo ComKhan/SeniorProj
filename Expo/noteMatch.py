@@ -1,3 +1,4 @@
+from enum import auto
 import matplotlib.pyplot
 from scipy.io.wavfile import read, write
 import sounddevice as sd
@@ -6,8 +7,10 @@ import wave
 import numpy as np
 import wavFuncs
 # from demo_file import *
-from fir_filter import *
+#from fir_filter import *
+from process_data import *
 from playsound import playsound
+import soundfile as sf
 # from btns_V1 import *
 
 # btn1 = Button(16) #Filter, Yes
@@ -20,44 +23,7 @@ from playsound import playsound
 
 
 
-def matchnote(freq, instr):
-    notes = {
-    32.70 :"Piano/c1.wav",
-    36.71 :"Piano/d1.wav",
-    41.2  :"Piano/e1.wav",
-    43.65 :"Piano/f1.wav",
-    49.00 :"Piano/g1.wav",
-    55.00 :"Piano/a1.wav",
-    61.74 :"Piano/b1.wav",
-    65.41 :"Piano/c2.wav",
-    73.42 :"Piano/d2.wav",
-    82.41 :"Piano/e2.wav",
-    87.31 :"Piano/f2.wav",
-    98.00 :"Piano/g2.wav",
-    110.0 :"Piano/a2.wav",
-    123.47:"Piano/b2.wav",
-    130.81:"Piano/c3.wav",
-    146.83:"Piano/d3.wav",
-    164.81:"Piano/e3.wav",
-    174.61:"Piano/f3.wav",
-    196.00:"Piano/g3.wav",
-    220.00:"Piano/a3.wav",
-    246.94:"Piano/b3.wav",
-    261.63:"Piano/c4.wav",
-    293.66:"Piano/d4.wav",
-    329.63:"Piano/e4.wav",
-    349.23:"Piano/f4.wav",
-    392.00:"Piano/g4.wav",
-    440.00:"Piano/a4.wav",
-    493.88:"Piano/b4.wav",
-    523.25:"Piano/c5.wav",
-    587.33:"Piano/d5.wav",
-    659.25:"Piano/e5.wav",
-    698.46:"Piano/f5.wav",
-    783.99:"Piano/g5.wav",
-    880.00:"Piano/a5.wav",
-    987.77:"Piano/b5.wav" 
-    }
+def matchnote(freq):
 
     notefreqs = [
     32.70 ,
@@ -98,7 +64,30 @@ def matchnote(freq, instr):
     ]
     
     val =(np.abs(np.array(notefreqs)-freq)).argmin()
-    return notes[notefreqs[val]]
+    return notefreqs[val]
+
+def interpolate(first, second, dist):
+    return first + (dist*(second-first))
+
+def setPer(Amplitude, tfreq, instrument_file, time):
+    Fs, y = read(instrument_file)
+    i = 0
+    output = []
+    length = len(y)
+    while i < Fs*time:
+        output.append(Amplitude*interpolate(y[int((i*tfreq/110) % (length-1))],
+                                            y[int(((i*tfreq/110) % (length-1))+1)],
+                                            (i*tfreq/110) % 1))
+        i += 1
+
+    output = np.int16(output)
+
+    write('setPer.wav', Fs, output)
+    Fs, y = read('setPer.wav')
+    
+    wavFuncs.playwav('setPer.wav')
+    
+    return Fs, y
 
 def autoTune(freq, time, instr):
     chunk = 4096
@@ -130,6 +119,17 @@ def autoTune(freq, time, instr):
     stream1.close()
 
     p1.terminate()
+
+def demo(instr):
+    chunk = 4096
+
+    wavFuncs.recording(1)
+    p_array, samplerate = sf.read("recording.wav")
+    p_array = list(p_array)
+    filt_out, freq = process_data(p_array, chunk, samplerate)
+    setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
+
+demo("harpsicord")
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
