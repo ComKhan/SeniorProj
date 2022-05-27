@@ -1,5 +1,5 @@
 from enum import auto
-import matplotlib.pyplot
+#import matplotlib.pyplot
 from scipy.io.wavfile import read, write
 import sounddevice as sd
 import pyaudio
@@ -89,7 +89,7 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     
     return Fs, y
 
-def autotune(instr):
+def autoTune(instr):
     chunk = 4096
 
     wavFuncs.recording(1)
