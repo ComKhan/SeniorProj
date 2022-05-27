@@ -86,7 +86,7 @@ class RecordS(State):
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
         #btn3.when_pressed = btns.clickC.clicked
-        #lcd.write_lcd("Recording\n","Volume ") # add volume variable
+        lcd.write_lcd("Recording\n","") # add volume variable
         wavFuncs.recording(1)
         audio = noteMatch.autoTune('Piano')
         btns.clickC.implement = True
