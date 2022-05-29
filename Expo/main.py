@@ -128,7 +128,7 @@ if __name__ == "__main__":
                 mainFSM.lcd = False
                 lcdDelay = False
             if ((testName == "RecordS") & (lcdDelay == True) & (lcdLoad == True)):
-                lcd.write_lcd("Recording. Press \n","C  to stop.")
+                lcd.write_lcd("Recording. Press \n","C to stop.")
                 mainFSM.lcd = False
                 lcdDelay = False
             if ((testName == "SetVolS") & (lcdDelay == True) & (lcdLoad == True)):
@@ -184,11 +184,11 @@ if __name__ == "__main__":
                     btns.clickC.implement = True
                     lcdDelay = True
 
-                '''if btns.clickD.implement == False: # set up for each button
+                if btns.clickD.implement == False: # set up for each button
                     mainFSM.FSM.Transition("toFilterS")
                     testTrans = mainFSM.FSM.trans
                     btns.clickD.implement = True
-                    lcdDelay = True'''
+                    lcdDelay = True
 
                 if btns.clickE.implement == False: # set up for each button
                     mainFSM.FSM.Transition("toInstS")
