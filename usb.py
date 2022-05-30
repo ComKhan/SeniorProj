@@ -1,19 +1,14 @@
 # Code used from : https://www.instructables.com/Raspberry-Pi-Data-Logging/
 # https://betterprogramming.pub/how-to-run-a-python-script-on-insertion-of-a-usb-device-2e86d38dcdb
-import os
-import time 
-from time import sleep
-from datetime import datetime
 
-file = open("/home/pi/data_log.csv", "a")
+#import os
+from scipy.io import wavfile
+
+Fs = 4800
+Fs, y = wavfile.read('/home/pi/Documents/SeniorProj-main/Piano/a0.wav')
+file = open("/media/pi/GRMCPRXFRER/test.wav", "a")
 i=0
-if os.stat("/home/pi/data_log.csv").st_size == 0:
-        file.write("Time,Sensor1,Sensor2,Sensor3,Sensor4,Sensor5\n")
-
-while True:
-        i=i+1
-        now = datetime.now()
-        file.write(str(now)+","+str(i)+","+str(-i)+","+str(i-10)+","+str(i+5)+","+str(i*i)+"\n")
-        file.flush()
-        time.sleep(5)
-        file.close()
+#if os.stat("/home/pi/data_log.csv").st_size == 0:
+wavfile.write("/media/pi/GRMCPRXFRER/test.wav", Fs, y)
+#file.flush()
+file.close()
