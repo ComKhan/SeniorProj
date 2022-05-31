@@ -75,9 +75,9 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     output = []
     length = len(y)
     while i < Fs*time:
-        output.append(Amplitude*interpolate(y[int((i*tfreq/110) % (length-1))],
-                                            y[int(((i*tfreq/110) % (length-1))+1)],
-                                            (i*tfreq/110) % 1))
+        output.append(Amplitude*interpolate(y[int((i*tfreq/523.25) % (length-1))],
+                                            y[int(((i*tfreq/523.25) % (length-1))+1)],
+                                            (i*tfreq/523.25) % 1))
         i += 1
 
     output = np.int16(output)
