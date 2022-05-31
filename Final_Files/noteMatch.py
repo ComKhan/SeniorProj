@@ -89,14 +89,17 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     
     return Fs, y
 
-def autoTune(instr):
+def autoTune(instr, match):
     chunk = 4096
 
     wavFuncs.recording(1)
     p_array, samplerate = sf.read("recording.wav")
     p_array = list(p_array)
     filt_out, freq = process_data(p_array, chunk, samplerate)
-    setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
+    if match == "AUTOTUNEMD":
+        setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
+    else:
+        setPer(1, freq, "periodfiles/"+instr+".wav", 1)
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
