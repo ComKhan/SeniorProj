@@ -100,8 +100,10 @@ class RecordS(State):
         while fin_flag != 1:
             if btns.clickC.implement == False:
                 noteMatch.stop_flag = 1
+                fin_flag = 1
                 lcd.write_lcd("stopping\n","")
         lcd.write_lcd("recording\n","done")
+        thread.join()
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
         
         #btns.clickC.implement = True
