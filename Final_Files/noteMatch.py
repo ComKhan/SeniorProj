@@ -21,7 +21,7 @@ import soundfile as sf
 # btn6 = Button(3) # Vol Dwn
 # btn7 = Button(2) # Vol Up
 
-
+global stop_flag
 
 def matchnote(freq):
 
@@ -104,12 +104,15 @@ def autoTune(instr, match):
     else:
         wavFuncs.playwav("nofreq.wav")
 
-def dynamicRecording(stop_flag, fin_flag):
+def dynamicRecording():
+    global stop_flag
+    stop_flag = 0
     chunk = 1024  # Record in chunks of 1024 samples
     sample_format = pyaudio.paInt16  # 16 bits per sample
     channels = 1
     fs = 48000  # Record at 44100 samples per second
     filename = "output.wav"
+    fin_flag = 0
 
     p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
@@ -127,16 +130,18 @@ def dynamicRecording(stop_flag, fin_flag):
     while stop_flag != 1:
         data = stream.read(chunk)
         frames.append(data)
-
+    stop_flag = 0
     # Stop and close the stream 
     stream.stop_stream()
     stream.close()
     # Terminate the PortAudio interface
     p.terminate()
-    frames = np.int16(frames)
     write(filename, fs, frames)
     print('Finished recording')
     fin_flag = 1
+    
+    w
+    return fin_flag
     
 # while True:
 #     btn1.when_pressed = clickA.clicked

@@ -93,12 +93,15 @@ class RecordS(State):
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         
         stop_flag = fin_flag = 0
-        thread = threading.Thread(target=noteMatch.dynamicRecording, agrs = (stop_flag, fin_flag))
+        thread = threading.Thread(target=noteMatch.dynamicRecording)
         thread.start()
         btns.clickC.implement = True
+        lcd.write_lcd("recording", "")
         while fin_flag != 1:
             if btns.clickC.implement == False:
-                stop_flag = 1
+                noteMatch.stop_flag = 1
+                lcd.write_lcd("stopping\n","")
+        lcd.write_lcd("recording\n","done")
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
         
         #btns.clickC.implement = True
