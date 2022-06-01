@@ -12,13 +12,13 @@ import time as ti
 import soundfile as sf
 
 
-def liverec(myarray, time=3, Fs=48000, freq=150):
+def liverec(myarray, time=0.1, Fs=48000, freq=150):
     while True:
         myrecording = sd.rec(int(time*Fs),Fs,2)
         sd.wait()
         freqtemp = maxffthps(myrecording[:,0], time)
         print(freqtemp)
-        if abs(freqtemp - freq) > 30:
+        if abs(freqtemp - freq) > 10:
             break
     return myrecording, freqtemp
 

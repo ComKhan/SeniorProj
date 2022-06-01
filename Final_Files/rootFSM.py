@@ -1,3 +1,6 @@
+#imports for file storage
+import threading
+
 # https://www.youtube.com/watch?v=E45v2dD3IQU&ab_channel=TrevorPayne
 from operator import truediv
 from tkinter import NONE
@@ -5,6 +8,7 @@ from types import prepare_class
 from random import randint
 import time
 import btns
+
 # imports for buttons.py
 import RPi.GPIO as GPIO
 from gpiozero import Button
@@ -87,7 +91,16 @@ class RecordS(State):
         btn2.when_pressed = btns.clickVol.volUpClicked
         btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
-        audio = noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
+        
+        stop_flag = fin_flag = 0
+        thread = threading.Thread(target=noteMatch.dynamicRecording, agrs = (stop_flag, fin_flag))
+        thread.start()
+        btns.clickC.implement = True
+        while fin_flag != 1:
+            if btns.clickC.implement == False:
+                stop_flag = 1
+        #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
+        
         #btns.clickC.implement = True
         pass
 
