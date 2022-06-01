@@ -138,7 +138,6 @@ def dynamicRecording():
     p.terminate()
     print('Finished recording')
     fin_flag = 1
-    print(b''.join(frames))
     wf = wave.open(filename, 'wb')
     wf.setnchannels(channels)
     wf.setsampwidth(p.get_sample_size(sample_format))
