@@ -136,11 +136,15 @@ def dynamicRecording():
     stream.close()
     # Terminate the PortAudio interface
     p.terminate()
-    write(filename, fs, frames)
     print('Finished recording')
     fin_flag = 1
     
-    w
+    wf = wave.open(filename, 'wb')
+    wf.setnchannels(channels)
+    wf.setsampwidth(p.get_sample_size(sample_format))
+    wf.setframerate(fs)
+    wf.writeframes(b''.join(frames))
+    wf.close()
     return fin_flag
     
 # while True:
