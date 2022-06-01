@@ -84,9 +84,6 @@ def setPer(Amplitude, tfreq, instrument_file, time):
 
     write('setPer.wav', Fs, output)
     Fs, y = read('setPer.wav')
-    
-    wavFuncs.playwav('setPer.wav')
-    
     return Fs, y
 
 def autoTune(instr, match):
@@ -99,10 +96,12 @@ def autoTune(instr, match):
     if freq != 1.0:
         if match == "AUTOTUNEMD":
             setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
+            wavFuncs.playwav('setPer.wav')
         else:
             setPer(1, freq, "periodfiles/"+instr+".wav", 1)
+            wavFuncs.playwav('setPer.wav')
     else:
-        wavFuncs.playwav("nofreq.wav")
+        pass
 
 def dynamicRecording():
     global stop_flag
@@ -145,6 +144,29 @@ def dynamicRecording():
     wf.writeframes(b''.join(frames))
     wf.close()
     return fin_flag
+
+
+def playback(instr, match):
+    chunk = 1024
+    Fs, y = read("output.wav")
+    outlist = []
+    freqtemp = 0
+    if len(y[0]) > 1:
+        y = y[:, 0]
+    for i in range(len(i)/Fs * 0.1):
+        templist = y[(i*Fs):(i*Fs)+Fs-1]
+        filt_out, freq = process_data(np.int16(templist), chunk, Fs)
+        if abs(freqtemp-freq)>10:
+            if match == "AUTOTUNEMD":
+                fs, vals = setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
+            else:
+                fs, vals = setPer(1, freq, "periodfiles/"+instr+".wav", 1)
+            outlist[i*fs:] = vals
+        freqtemp = freq
+    outlist = np.int16(outlist)
+    write("playback.wav", fs, outlist)
+    wavFuncs.playwav("playback.wav")
+
     
 # while True:
 #     btn1.when_pressed = clickA.clicked

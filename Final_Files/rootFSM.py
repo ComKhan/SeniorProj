@@ -104,6 +104,7 @@ class RecordS(State):
                 lcd.write_lcd("stopping\n","")
         lcd.write_lcd("recording\n","done")
         thread.join()
+        noteMatch.playback(btns.clickE.val, btns.clickD.val)
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
         
         #btns.clickC.implement = True
