@@ -97,13 +97,13 @@ class RecordS(State):
         thread = threading.Thread(target=noteMatch.dynamicRecording)
         thread.start()
         btns.clickC.implement = True
-        lcd.write_lcd("recording", "")
+        lcd.write_lcd("Recording", "")
         while fin_flag != 1:
             if btns.clickC.implement == False:
                 noteMatch.stop_flag = 1
                 fin_flag = 1
                 lcd.write_lcd("stopping\n","")
-        lcd.write_lcd("recording\n","done")
+        lcd.write_lcd("Recording\n","done")
         thread.join()
         noteMatch.playback(btns.clickE.val, btns.clickD.val)
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)

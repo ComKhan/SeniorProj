@@ -25,24 +25,6 @@ import wave
 import rootFSM as fsm
 import btns
 import subprocess
-'''
-global variables
-
-
-'''
-
-''' Using fsm code
-States
-
-'''
-
-
-class currProps(object): # stores current values for FSM
-    def __init__(self):
-        self.currState = INIT
-
-
-current = currProps()
 
 
 '''def signal_handler(sig, frame):
