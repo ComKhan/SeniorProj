@@ -5,10 +5,11 @@
 from scipy.io import wavfile
 
 Fs = 4800
-Fs, y = wavfile.read('/home/pi/Documents/SeniorProj-main/Piano/a0.wav')
-file = open("/media/pi/GRMCPRXFRER/test.wav", "a")
-i=0
-#if os.stat("/home/pi/data_log.csv").st_size == 0:
-wavfile.write("/media/pi/GRMCPRXFRER/test.wav", Fs, y)
-#file.flush()
-file.close()
+
+def storeUSB():
+    Fs, y = wavfile.read('/home/pi/Documents/SeniorProj-main/Piano/a0.wav')
+    file = open("/media/pi/GRMCPRXFRER/test.wav", "a")
+    #if os.stat("/home/pi/data_log.csv").st_size == 0:
+    wavfile.write("/media/pi/GRMCPRXFRER/test.wav", Fs, y)
+    #file.flush()
+    file.close()

@@ -14,6 +14,7 @@ import RPi.GPIO as GPIO
 from gpiozero import Button
 import main
 import lcd
+import usb
 import subprocess
 import noteMatch
 import wavFuncs
@@ -121,6 +122,8 @@ class StoreS(State):
         #lcd.write_lcd("Play file?   Yes\n","            No")
         #btn6.when_pressed = btns.clickF.clicked
         #btn7.when_pressed = btns.clickG.clicked
+        usb.storeUSB()
+        time.sleep(3)
         pass
 
 class PlayS(State):
@@ -133,7 +136,7 @@ class PlayS(State):
         #lcd.write_lcd("Playing file")
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
-
+        
         pass
 
 class QuickVolS(State):
