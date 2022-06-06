@@ -128,7 +128,7 @@ if __name__ == "__main__":
                 mainFSM.lcd = False
                 lcdDelay = False
                 lcdLoad = False
-            '''if ((testName == "OutputS") & (lcdDelay == True) & (lcdLoad == True)):
+            if ((testName == "OutputS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Output method: \n", btns.clickF.val)
                 mainFSM.lcd = False
                 lcdDelay = False
@@ -140,7 +140,7 @@ if __name__ == "__main__":
             if ((testName == "PlayS") & (lcdDelay == True) & (lcdLoad == True)):
                 lcd.write_lcd("Play file    Yes \n","again?        No")
                 mainFSM.lcd = False
-                lcdDelay = False'''
+                lcdDelay = False
 
             
             if (testName == "WaitS") | (testName == "InitS"):
@@ -178,7 +178,7 @@ if __name__ == "__main__":
                     btns.clickE.implement = True
                     lcdDelay = True
 
-                '''if btns.clickF.implement == False: # set up for each button
+                if btns.clickF.implement == False: # set up for each button
                     mainFSM.FSM.Transition("toOutputS")
                     testTrans = mainFSM.FSM.trans
                     btns.clickF.implement = True
@@ -189,7 +189,7 @@ if __name__ == "__main__":
                     print("no use for btn in this state")
                     testTrans = mainFSM.FSM.trans
                     btns.clickG.implement = True
-                    lcdDelay = True'''
+                    lcdDelay = True
 
             if ((testName == "SetVolS") | (testName == "FilterS") | (testName == "InstS") | 
                 (testName == "QuickVolS") | (testName == "SetVolS") | (testName == "OutputS")):
@@ -199,7 +199,7 @@ if __name__ == "__main__":
                 
             if (testName == "RecordS"): # stuck on: button doesn't reset to false
                 if btns.clickC.implement == False:
-                    mainFSM.FSM.Transition("toWaitS")
+                    mainFSM.FSM.Transition("toStoreS")
                     testTrans = mainFSM.FSM.trans
                     btns.clickC.implement = True
                     lcdDelay = True
@@ -217,7 +217,7 @@ if __name__ == "__main__":
                     btns.clickF.implement = True
                     lcdDelay = True
 
-            '''if (testName == "PlayS"):
+            if (testName == "PlayS"):
                 if btns.clickG.implement == False:
                     mainFSM.FSM.Transition("toPlayS")
                     testTrans = mainFSM.FSM.trans
@@ -228,7 +228,7 @@ if __name__ == "__main__":
                     mainFSM.FSM.Transition("toWaitS")
                     testTrans = mainFSM.FSM.trans
                     btns.clickF.implement = True
-                    lcdDelay = True'''
+                    lcdDelay = True
 
             if (lcdLoad == False):
                 count += 1
