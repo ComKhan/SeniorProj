@@ -1,4 +1,5 @@
 from enum import auto
+from scipy.fftpack import hilbert
 from scipy.io.wavfile import read, write
 import sounddevice as sd
 import pyaudio
@@ -158,14 +159,19 @@ def playback(instr, match: bool):
     for i in range(int(len(y)/Fs * 10)):
         templist = y[int(i*Fs/10):int(i*Fs/10)+int(Fs/10)-1]
         filt_out, freq = process_data(np.int16(templist), chunk, Fs)
+
+        amp_envelope = np.abs(hilbert(np.int16(templist)))
+
+        avg_vol = sum(amp_envelope)/ len(amp_envelope)
+
         fs = 44100
         lcd.write_lcd("now processing\n","{} out of {}".format(i, int(len(y)/Fs * 10)-1))
         print("{} out of {}".format(i, int(len(y)/Fs * 10)-1))
         if abs(freqtemp-freq)>20:
             if match == "AUTOTUNEMD":
-                fs, vals = setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
+                fs, vals = setPer(avg_vol, matchnote(freq), "periodfiles/"+instr+".wav", 1)
             else:
-                fs, vals = setPer(1, freq, "periodfiles/"+instr+".wav", 1)
+                fs, vals = setPer(avg_vol, freq, "periodfiles/"+instr+".wav", 1)
             outlist[int(i*fs/10):] = vals
         freqtemp = freq
     outlist = np.int16(outlist)
