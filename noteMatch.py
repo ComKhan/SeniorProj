@@ -102,7 +102,7 @@ def matchnote(freq):
     val =(np.abs(np.array(notefreqs)-freq)).argmin()
     return notes[notefreqs[val]]
 
-def autoTune(soundFile, time):
+def Tune(soundFile, time):
     chunk = 4096
     p_array, samplerate = sf.read(soundFile)
     p_array = list(p_array)
@@ -148,5 +148,5 @@ def autoTune(soundFile, time):
 #     if clickE.implement == False:
 #         break
 wavFuncs.recording(1)
-audio = autoTune('recording.wav', 0.1)
+audio = Tune('recording.wav', 0.1)
 #curl -sS https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/i2samp.sh | bash

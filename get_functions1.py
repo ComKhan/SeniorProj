@@ -147,7 +147,7 @@ def play_freq(q5, q6, flag2):
         if not q5.empty():
             freq_val = q5.get()
             print(freq_val)
-            autoTune(freq_val, 1)
+            Tune(freq_val, 1)
 
 
         # if not q6.empty():
@@ -159,7 +159,7 @@ def play_freq(q5, q6, flag2):
         if not q5.empty():
             freq_val = q5.get()
             print(freq_val)
-            autoTune(freq_val, 1)
+            Tune(freq_val, 1)
 
         # if not q6.empty():
         # vol_val = q6.get()

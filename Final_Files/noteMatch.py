@@ -86,7 +86,7 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     Fs, y = read('setPer.wav')
     return Fs, y
 
-def autoTune(instr, match):
+def Tune(instr, match):
     chunk = 4096
 
     wavFuncs.recording(1)
@@ -146,7 +146,7 @@ def dynamicRecording():
     return fin_flag
 
 
-def playback(instr, match):
+def playback(instr, match: bool):
     chunk = 1024
     Fs, y = read("output.wav")
     outlist = []

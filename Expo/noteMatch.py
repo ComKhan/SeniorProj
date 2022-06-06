@@ -89,7 +89,7 @@ def setPer(Amplitude, tfreq, instrument_file, time):
     
     return Fs, y
 
-def autoTune(instr):
+def Tune(instr):
     chunk = 4096
 
     wavFuncs.recording(1)
