@@ -198,7 +198,10 @@ if __name__ == "__main__":
                 
             if (testName == "RecordS"): # stuck on: button doesn't reset to false
                 if btns.clickC.implement == False:
-                    mainFSM.FSM.Transition("toStoreS")
+                    if (btns.clickD.val == "AUTOTUNELIVE") or (btns.clickD.val == "EXACTLIVE"):
+                        mainFSM.FSM.Transition("toWaitS")
+                    else:
+                        mainFSM.FSM.Transition("toStoreS")
                     testTrans = mainFSM.FSM.trans
                     btns.clickC.implement = True
                     lcdDelay = True

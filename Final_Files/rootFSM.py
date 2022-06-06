@@ -99,20 +99,34 @@ class RecordS(State):
         btn2.when_pressed = btns.clickVol.volUpClicked
         btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
+        if (btns.clickD.val == "AUTOTUNEMD") or (btns.clickD.val == "EXACTMD"):
+            stop_flag = fin_flag = 0
+            thread = threading.Thread(target=noteMatch.dynamicRecording)
+            thread.start()
+            btns.clickC.implement = True
+            lcd.write_lcd("Recording press\n", "C to stop")
+            while fin_flag != 1:
+                if btns.clickC.implement == False:
+                    noteMatch.stop_flag = 1
+                    fin_flag = 1
+                    lcd.write_lcd("stopping\n","")
+            lcd.write_lcd("Recording\n","done")
+            thread.join()
+            noteMatch.playback(btns.clickE.val, btns.clickD.val)
         
-        stop_flag = fin_flag = 0
-        thread = threading.Thread(target=noteMatch.dynamicRecording)
-        thread.start()
-        btns.clickC.implement = True
-        lcd.write_lcd("Recording press\n", "C to stop")
-        while fin_flag != 1:
-            if btns.clickC.implement == False:
-                noteMatch.stop_flag = 1
-                fin_flag = 1
-                lcd.write_lcd("stopping\n","")
-        lcd.write_lcd("Recording\n","done")
-        thread.join()
-        noteMatch.playback(btns.clickE.val, btns.clickD.val)
+        else:
+            fin_flag = 0
+            btns.clickC.implement = True
+            lcd.write_lcd("Recording press\n", "C to stop")
+            while fin_flag != 1:
+                if btns.clickC.implement == False:    
+                    fin_flag = 1
+                    lcd.write_lcd("stopping\n","")
+                else:
+                    noteMatch.Tune(btns.clickE.val, btns.clickD.val)
+            lcd.write_lcd("Recording\n","done")
+                    
+            
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
         
         #btns.clickC.implement = True

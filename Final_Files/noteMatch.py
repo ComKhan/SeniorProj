@@ -94,13 +94,17 @@ def Tune(instr, match):
     p_array = list(p_array)
     filt_out, freq = process_data(p_array, chunk, samplerate)
     
+    amp_envelope = np.abs(p_array)
+
+    avg_vol = sum(amp_envelope)/ len(amp_envelope)#/(2**15)
+    print(avg_vol)
     
     if freq != 1.0:
-        if match == "AUTOTUNEMD":
-            setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
+        if match == "AUTOTUNELIVE":
+            setPer(avg_vol, matchnote(freq), "periodfiles/"+instr+".wav", 1)
             wavFuncs.playwav('setPer.wav')
         else:
-            setPer(1, freq, "periodfiles/"+instr+".wav", 1)
+            setPer(avg_vol, freq, "periodfiles/"+instr+".wav", 1)
             wavFuncs.playwav('setPer.wav')
     else:
         pass
@@ -148,7 +152,7 @@ def dynamicRecording():
     return fin_flag
 
 
-def playback(instr, match: bool):
+def playback(instr, match):
     print("Currently processing Recording")
     chunk = 1024
     Fs, y = read("output.wav")
@@ -162,8 +166,8 @@ def playback(instr, match: bool):
 
         amp_envelope = np.abs(hilbert(np.int16(templist)))
 
-        avg_vol = sum(amp_envelope)/ len(amp_envelope)
-
+        avg_vol = sum(amp_envelope)/ len(amp_envelope)/(2**15)
+        print(avg_vol)
         fs = 44100
         lcd.write_lcd("now processing\n","{} out of {}".format(i, int(len(y)/Fs * 10)-1))
         print("{} out of {}".format(i, int(len(y)/Fs * 10)-1))

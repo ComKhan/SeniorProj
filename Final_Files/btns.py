@@ -17,7 +17,7 @@ import subprocess
 recordSet = ["STOP", "START"] # when initialized it begins at STOP, only on next click it STARTS
 instSet = ["piano", "harpsicord", "guitar", "saxophone", "glass", "recorder", "xylophone"] # cycles through instruments, correspond to library
 volSet = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100] # make separate function that stops at max and min instead of looping around
-filterSet = ["LIVEMD", "AUTOTUNEMD"]
+filterSet = ["ExactMD", "AUTOTUNEMD", "AUTOTUNELIVE", "EXACTLIVE"]
 outputSet = ["SJACK", "LJACK", "MIDI", "NONE"]
 ynSet = ["Yes", "No"]
 
