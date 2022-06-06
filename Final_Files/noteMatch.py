@@ -92,6 +92,8 @@ def Tune(instr, match):
     p_array, samplerate = sf.read("recording.wav")
     p_array = list(p_array)
     filt_out, freq = process_data(p_array, chunk, samplerate)
+    
+    
     if freq != 1.0:
         if match == "AUTOTUNEMD":
             setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)

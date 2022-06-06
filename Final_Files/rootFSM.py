@@ -110,10 +110,7 @@ class RecordS(State):
                 noteMatch.stop_flag = 1
                 fin_flag = 1
                 lcd.write_lcd("stopping\n","")
-<<<<<<< HEAD
-=======
         lcd.write_lcd("Recording\n","done")
->>>>>>> 8784c2d7f5f7620d5f2db09433777c8779afe815
         thread.join()
         noteMatch.playback(btns.clickE.val, btns.clickD.val)
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
@@ -156,11 +153,7 @@ class PlayS(State):
         global playFlag
         global playFileAddr
         if playFlag == False:
-<<<<<<< HEAD
             wavFuncs.playwav("playback.wav")
-=======
-            wavFuncs.playwav('playback.wav')
->>>>>>> 8784c2d7f5f7620d5f2db09433777c8779afe815
             playFlag = True
         if btns.clickG.implement == False:
             wavFuncs.playwav('playback.wav')
