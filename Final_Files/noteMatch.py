@@ -1,17 +1,14 @@
 from enum import auto
-#import matplotlib.pyplot
 from scipy.io.wavfile import read, write
 import sounddevice as sd
 import pyaudio
 import wave
 import numpy as np
 import wavFuncs
-# from demo_file import *
-#from fir_filter import *
+import lcd
 from process_data import *
 from playsound import playsound
 import soundfile as sf
-# from btns_V1 import *
 
 # btn1 = Button(16) #Filter, Yes
 # btn2 = Button(6) # Inst
@@ -71,6 +68,7 @@ def interpolate(first, second, dist):
 
 def setPer(Amplitude, tfreq, instrument_file, time):
     Fs, y = read(instrument_file)
+    print("entered set period function")
     i = 0
     output = []
     length = len(y)
@@ -84,6 +82,7 @@ def setPer(Amplitude, tfreq, instrument_file, time):
 
     write('setPer.wav', Fs, output)
     Fs, y = read('setPer.wav')
+    print("exited set period function")
     return Fs, y
 
 def Tune(instr, match):
@@ -147,24 +146,29 @@ def dynamicRecording():
 
 
 def playback(instr, match: bool):
+    print("Currently processing Recording")
     chunk = 1024
     Fs, y = read("output.wav")
     outlist = []
     freqtemp = 0
-    if len(y[0]) > 1:
-        y = y[:, 0]
-    for i in range(len(i)/Fs * 0.1):
-        templist = y[(i*Fs):(i*Fs)+Fs-1]
+    fs = 44100
+    y = list(y)
+    for i in range(int(len(y)/Fs * 10)):
+        templist = y[int(i*Fs/10):int(i*Fs/10)+int(Fs/10)-1]
         filt_out, freq = process_data(np.int16(templist), chunk, Fs)
-        if abs(freqtemp-freq)>10:
+        fs = 44100
+        lcd.write_lcd("now processing\n","{} out of {}".format(i, int(len(y)/Fs * 10)-1))
+        if abs(freqtemp-freq)>15:
             if match == "AUTOTUNEMD":
                 fs, vals = setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
             else:
                 fs, vals = setPer(1, freq, "periodfiles/"+instr+".wav", 1)
-            outlist[i*fs:] = vals
+            outlist[int(i*fs/10):] = vals
         freqtemp = freq
     outlist = np.int16(outlist)
+    print("finished processing audio")
     write("playback.wav", fs, outlist)
+    print("audio saved")
     wavFuncs.playwav("playback.wav")
 
     
