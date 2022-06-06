@@ -100,7 +100,7 @@ class RecordS(State):
         btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         
-        '''stop_flag = fin_flag = 0
+        stop_flag = fin_flag = 0
         thread = threading.Thread(target=noteMatch.dynamicRecording)
         thread.start()
         btns.clickC.implement = True
@@ -110,9 +110,9 @@ class RecordS(State):
                 noteMatch.stop_flag = 1
                 fin_flag = 1
                 lcd.write_lcd("stopping\n","")
-        lcd.write_lcd("Recording done\n","processing")
+        lcd.write_lcd("Recording\n","done")
         thread.join()
-        noteMatch.playback(btns.clickE.val, btns.clickD.val)'''
+        noteMatch.playback(btns.clickE.val, btns.clickD.val)
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
         
         #btns.clickC.implement = True
@@ -153,7 +153,7 @@ class PlayS(State):
         global playFlag
         global playFileAddr
         if playFlag == False:
-            wavFuncs.playwav("/home/pi/Documents/SeniorProj-main/Final_Files/recording.wav")
+            wavFuncs.playwav('playback.wav')
             playFlag = True
         if btns.clickG.implement == False:
             wavFuncs.playwav(playFileAddr)
