@@ -110,7 +110,6 @@ if __name__ == "__main__":
                 mainFSM.lcd = False
                 lcdDelay = False
             if ((testName == "RecordS") & (lcdDelay == True) & (lcdLoad == True)):
-                lcd.write_lcd("Recording. Press \n","C to stop.")
                 mainFSM.lcd = False
                 lcdDelay = False
             if ((testName == "SetVolS") & (lcdDelay == True) & (lcdLoad == True)):

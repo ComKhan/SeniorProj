@@ -28,7 +28,7 @@ btn5 = Button(4) # Record
 btn6 = Button(3) # Vol Dwn
 btn7 = Button(2) # Vol Up
 global playFileAddr
-playFileAddr = "/home/pi/Documents/SeniorProj-main/Final_Files/recording.wav"
+playFileAddr = "playback.wav"
 #playFlag = False
 
 class InitS(State):
@@ -100,19 +100,18 @@ class RecordS(State):
         btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         
-        '''stop_flag = fin_flag = 0
+        stop_flag = fin_flag = 0
         thread = threading.Thread(target=noteMatch.dynamicRecording)
         thread.start()
         btns.clickC.implement = True
-        lcd.write_lcd("Recording", "")
+        lcd.write_lcd("Recording press\n", "C to stop")
         while fin_flag != 1:
             if btns.clickC.implement == False:
                 noteMatch.stop_flag = 1
                 fin_flag = 1
                 lcd.write_lcd("stopping\n","")
-        lcd.write_lcd("Recording done\n","processing")
         thread.join()
-        noteMatch.playback(btns.clickE.val, btns.clickD.val)'''
+        noteMatch.playback(btns.clickE.val, btns.clickD.val)
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
         
         #btns.clickC.implement = True
@@ -131,7 +130,7 @@ class StoreS(State):
         #btn7.when_pressed = btns.clickG.clicked
         global usbFlag
         if usbFlag == False:
-            usb.storeUSB()
+            #usb.storeUSB()
             time.sleep(3)
             usbFlag = True
         btn6.when_pressed = btns.clickF.clicked
@@ -153,7 +152,7 @@ class PlayS(State):
         global playFlag
         global playFileAddr
         if playFlag == False:
-            wavFuncs.playwav("/home/pi/Documents/SeniorProj-main/Final_Files/recording.wav")
+            wavFuncs.playwav("playback.wav")
             playFlag = True
         if btns.clickG.implement == False:
             wavFuncs.playwav(playFileAddr)

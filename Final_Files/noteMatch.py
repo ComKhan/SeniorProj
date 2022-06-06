@@ -158,7 +158,8 @@ def playback(instr, match: bool):
         filt_out, freq = process_data(np.int16(templist), chunk, Fs)
         fs = 44100
         lcd.write_lcd("now processing\n","{} out of {}".format(i, int(len(y)/Fs * 10)-1))
-        if abs(freqtemp-freq)>15:
+        print("{} out of {}".format(i, int(len(y)/Fs * 10)-1))
+        if abs(freqtemp-freq)>20:
             if match == "AUTOTUNEMD":
                 fs, vals = setPer(1, matchnote(freq), "periodfiles/"+instr+".wav", 1)
             else:
@@ -169,8 +170,6 @@ def playback(instr, match: bool):
     print("finished processing audio")
     write("playback.wav", fs, outlist)
     print("audio saved")
-    wavFuncs.playwav("playback.wav")
-
     
 # while True:
 #     btn1.when_pressed = clickA.clicked
