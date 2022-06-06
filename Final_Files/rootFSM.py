@@ -29,6 +29,7 @@ btn5 = Button(4) # Record
 #btn7 = Button(2) # Vol Up
 usbFlag = False
 playFileAddr = "/home/pi/Documents/SeniorProj-main/Final_Files/recording.wav"
+playFlag = False
 
 class InitS(State):
     def __init__(self):
@@ -91,6 +92,7 @@ class RecordS(State):
 
     def Go(self):
         usbFlag = False # reset so that after recording it stores the file
+        playFlag = False # reset flag
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
         btn3.when_pressed = btns.clickC.clicked
@@ -129,6 +131,7 @@ class StoreS(State):
             usb.storeUSB()
             time.sleep(3)
             usbFlag = True
+
         pass
 
 class PlayS(State):
@@ -141,7 +144,13 @@ class PlayS(State):
         #lcd.write_lcd("Playing file")
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
-        wavFuncs.playwav(playFileAddr)
+        if playFlag == False:
+            wavFuncs.playwav(playFileAddr)
+            playFlag = True
+        if btns.clickG.implement == False:
+            wavFuncs.playwav(playFileAddr)
+            playFlag = True
+            btns.clickG.implement = True
         pass
 
 class QuickVolS(State):
