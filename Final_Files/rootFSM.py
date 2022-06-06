@@ -25,10 +25,11 @@ btn2 = Button(6) # Inst
 btn3 = Button(5) # No
 btn4 = Button(0) # Output
 btn5 = Button(4) # Record
-#btn6 = Button(3) # Vol Dwn
-#btn7 = Button(2) # Vol Up
-usbFlag = False
+btn6 = Button(3) # Vol Dwn
+btn7 = Button(2) # Vol Up
+global playFileAddr
 playFileAddr = "/home/pi/Documents/SeniorProj-main/Final_Files/recording.wav"
+#playFlag = False
 
 class InitS(State):
     def __init__(self):
@@ -90,13 +91,16 @@ class RecordS(State):
         pass
 
     def Go(self):
+        global usbFlag
+        global playFlag
         usbFlag = False # reset so that after recording it stores the file
+        playFlag = False # reset flag
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
         btn3.when_pressed = btns.clickC.clicked
         #lcd.write_lcd("Recording\n","Volume ") # add volume variable
         
-        stop_flag = fin_flag = 0
+        '''stop_flag = fin_flag = 0
         thread = threading.Thread(target=noteMatch.dynamicRecording)
         thread.start()
         btns.clickC.implement = True
@@ -108,7 +112,7 @@ class RecordS(State):
                 lcd.write_lcd("stopping\n","")
         lcd.write_lcd("Recording done\n","processing")
         thread.join()
-        noteMatch.playback(btns.clickE.val, btns.clickD.val)
+        noteMatch.playback(btns.clickE.val, btns.clickD.val)'''
         #noteMatch.autoTune(btns.clickE.val, btns.clickD.val)
         
         #btns.clickC.implement = True
@@ -125,10 +129,13 @@ class StoreS(State):
         #lcd.write_lcd("Play file?   Yes\n","            No")
         #btn6.when_pressed = btns.clickF.clicked
         #btn7.when_pressed = btns.clickG.clicked
+        global usbFlag
         if usbFlag == False:
             usb.storeUSB()
             time.sleep(3)
             usbFlag = True
+        btn6.when_pressed = btns.clickF.clicked
+        btn7.when_pressed = btns.clickG.clicked
         pass
 
 class PlayS(State):
@@ -141,7 +148,17 @@ class PlayS(State):
         #lcd.write_lcd("Playing file")
         btn1.when_pressed = btns.clickVol.volDwnClicked
         btn2.when_pressed = btns.clickVol.volUpClicked
-        wavFuncs.playwav(playFileAddr)
+        btn6.when_pressed = btns.clickF.clicked
+        btn7.when_pressed = btns.clickG.clicked
+        global playFlag
+        global playFileAddr
+        if playFlag == False:
+            wavFuncs.playwav("/home/pi/Documents/SeniorProj-main/Final_Files/recording.wav")
+            playFlag = True
+        if btns.clickG.implement == False:
+            wavFuncs.playwav(playFileAddr)
+            playFlag = True
+            btns.clickG.implement = True
         pass
 
 class QuickVolS(State):
