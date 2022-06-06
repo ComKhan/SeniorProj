@@ -156,7 +156,7 @@ class PlayS(State):
             wavFuncs.playwav('playback.wav')
             playFlag = True
         if btns.clickG.implement == False:
-            wavFuncs.playwav(playFileAddr)
+            wavFuncs.playwav('playback.wav')
             playFlag = True
             btns.clickG.implement = True
         pass
